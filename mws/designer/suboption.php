@@ -11,51 +11,53 @@ $session = validateASession( $ses );
 
 if( $session["ok"]) {
 
-    if( $ope == 'getmen' ) {
+    if( $ope == 'getsub' ) {
 
-        $menuId = getIntValueOf('menuid');
+        $suboptionid = getIntValueOf('suboptionid');
 
-        if( $menuId ) {
-            $data = getMenuData($menuId);
+        if( $suboptionid ) {
+            $data = getSubOptionData($suboptionid);
         }
         else {
             setError(3001, 'Impossible to execute');
         }
     }
-    else if( $ope == 'addmen' ) {
+    else if( $ope == 'addsub' ) {
         
-        $moduleId = getIntValueOf('iid');
+        $optionId = getIntValueOf('iid');
         $key = getCharValueOf('key');
         $name = getCharValueOf('name');
         $description = getCharValueOf('description');
 
-        if( $moduleId and $key and $name) {
-            $data = addMenu($moduleId, $name, $key, $description);
+        if( $optionId and $key and $name) {
+            $data = addOption($optionId, $name, $key, $description);
         }
         else {
             setError(3001, 'Impossible to execute');
         }
     }
-    else if( $ope == 'setmen' ) {
+    else if( $ope == 'setsub' ) {
 
-        $menuId = false;
+        $optionId = false;
         $key = false;
         $name = false;
         $description = false;
         $icon = false;
         $tip = false;
+        $xtype = false;
         $notes = false;
 
-        if( isset($_REQUEST['menuid']) ) $menuId = $_REQUEST['menuid']; 
+        if( isset($_REQUEST['optionid']) ) $optionId = $_REQUEST['optionid']; 
         if( isset($_REQUEST['ke']) ) $key = $_REQUEST['ke']; 
         if( isset($_REQUEST['na']) ) $name = $_REQUEST['na']; 
         if( isset($_REQUEST['de']) ) $description = $_REQUEST['de']; 
+        if( isset($_REQUEST['xt']) ) $xtype = $_REQUEST['xt']; 
         if( isset($_REQUEST['ic']) ) $icon = $_REQUEST['ic']; 
         if( isset($_REQUEST['ti']) ) $tip = $_REQUEST['ti']; 
         if( isset($_REQUEST['no']) ) $notes = $_REQUEST['no']; 
         
-        if( $menuId ) {
-            $data = setMenuData($menuId, $key, $name, $description, $icon, $tip, $notes);
+        if( $optionId ) {
+            $data = setoptionData($optionId, $key, $name, $description, $xtype, $icon, $tip, $notes);
         }
         else {
             setError(3001, 'Impossible to execute');
@@ -87,33 +89,42 @@ print json_encode($results, JSON_NUMERIC_CHECK);
 // F U N C I O N E S
 
 
-function getMenuData($id) {
+function getSubOptionData($id) {
 
     $sql = "Select
+                id,
+                tableId,
+                type,
                 `key`,
                 name,
                 description,
+                xtype,
                 icon,
                 tip,
-                notes
+                notes,
+                xtype,
+                titleform,
+                dataform,
+                store
             From
-                menu
+                `suboption`
             Where
                 id = ?";
     $args = array($id);
-    $menu = get($sql, $args, true);
+    $suboption = get($sql, $args, true);
 
     setError(0);
-    return $menu;
+    return $suboption;
 
 }
 
-function setMenuData($menuId, $key, $name, $description, $icon, $tip, $notes) {
+function setoptionData($optionId, $key, $name, $description, $xtype, $icon, $tip, $notes) {
 
-    $sql = "Update menu set
+    $sql = "Update `suboption` set
                 `key` = ?,
                 `name` = ?,
                 `description` = ?,
+                `xtype` = ?,
                 `icon` = ?,
                 `tip` = ?,
                 `notes` = ?
@@ -123,10 +134,11 @@ function setMenuData($menuId, $key, $name, $description, $icon, $tip, $notes) {
     $args = array($key,
         $name,
         $description,
+        $xtype,
         $icon,
         $tip,
         $notes,
-        $menuId
+        $optionId
     );
     
     execute($sql, $args, true);
@@ -135,29 +147,28 @@ function setMenuData($menuId, $key, $name, $description, $icon, $tip, $notes) {
     return true;
 }
 
-function addMenu($moduleId, $name, $key, $description){
-
-    $sql = "Insert into menu (moduleId, `key`, name, description) values (?,?,?,?)";
-    $args = array( $moduleId, $key, $name, $description);
+function addSubOption($optionId, $name, $key, $description) {
+    
+    $sql = "Insert into `suboption` (optionId, `key`, name, description) values (?,?,?,?)";
+    $args = array($optionId, $key, $name, $description);
     $id = execute($sql, $args);
 
     $sql = "Select
-                concat('n-', right( concat('00000', id), 5 ) ) as id,
+                concat('o-', right( concat('00000', id), 5 ) ) as id,
                 id as internalId,
                 `key`,
                 name,
                 description,
                 name as text,
-                'x-fas fa-square' as iconCls
+                'x-fas fa-minus' as iconCls
             From
-                menu
+                `suboption`
             Where
                 id = ?";
-
     $args = array($id);
-    $menu = get($sql, $args);
+    $option = get($sql, $args);;
 
     setError(0);
 
-    return $menu;
+    return $option;
 }

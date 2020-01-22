@@ -1,6 +1,6 @@
 Ext.define('App.view.main.operation.solutions.11-modules.ModulesController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.operation-solutions-modules-modules',
+    alias: 'controller.operation-solutions-modules',
 
     listen: {
         controller: {

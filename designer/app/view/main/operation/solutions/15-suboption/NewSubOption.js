@@ -1,7 +1,7 @@
 
-Ext.define('App.view.main.operation.solutions.13-menu.NewMenu',{
+Ext.define('App.view.main.operation.solutions.15-suboption.SubNewOption',{
     extend: 'Ext.form.Panel',
-    xtype: 'newmenu',
+    xtype: 'newsuboption',
 
     requires: [
         'Ext.form.field.TextArea'

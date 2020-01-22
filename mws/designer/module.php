@@ -13,9 +13,7 @@ if( $session["ok"]) {
 
     if( $ope == 'getmod' ) {
 
-        $moduleId = false;
-
-        if( isset($_REQUEST['moduleid']) ) $moduleId = $_REQUEST['moduleid'];
+        $moduleId = getIntValueOf('moduleid');
 
         if( $moduleId ) {
             $data = getModuleData($moduleId);

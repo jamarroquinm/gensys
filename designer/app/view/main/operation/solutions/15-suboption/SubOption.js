@@ -1,15 +1,15 @@
-Ext.define('App.view.main.operation.solutions.14-option.Option',{
+Ext.define('App.view.main.operation.solutions.15-suboption.SubOption',{
     extend: 'Ext.container.Container',
-    xtype: 'define-option',
+    xtype: 'define-suboption',
 
     requires: [
         'Ext.form.Panel',
         'Ext.toolbar.Spacer'
     ],
 
-    controller: 'operation-solutions-option',
+    controller: 'operation-solutions-suboption',
     viewModel: {
-        type: 'operation-solutions-option'
+        type: 'operation-solutions-suboption'
     },
 
     layout: {

@@ -1,31 +1,32 @@
-Ext.define('App.view.main.operation.solutions.13-menu.MenuController', {
+Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.operation-solutions-menu',
+    alias: 'controller.operation-solutions-suboption',
 
     listen: {
         controller: {
             '*': {
                 solutionclosed: 'onSolutionClosed',
-                loadmenu: 'onLoadMenuInfo'
+                loadsuboption: 'onLoadSubOptionInfo'
             }
         }
     },
 
-    onLoadMenuInfo: function(id) {
+    onLoadSubOptionInfo: function(id) {
         const mod = this.getViewModel(),
             key = this.lookupReference('key'),
             name = this.lookupReference('name'),
             description = this.lookupReference('description'),
             icon = this.lookupReference('icon'),
             tip = this.lookupReference('tip'),
+            xtype = this.lookupReference('xtype'),
             notes = this.lookupReference('notes');
 
         Ext.Ajax.request({
-            url: Session.getScriptsPath('menu', 'getmen'),
+            url: Session.getScriptsPath('suboption', 'getsub'),
         
             params: {
                 IhQYw45L6i: Session.getId(),
-                menuid: id
+                suboptionid: id
             },
         
             success: function(response, opts) {
@@ -53,47 +54,51 @@ Ext.define('App.view.main.operation.solutions.13-menu.MenuController', {
 
         function setData(data) {
 
-            mod.set('menuId', id);
+            mod.set('optionId', id);
 
-            mod.set('men_key', data.key);
-            mod.set('men_name', data.name);
-            mod.set('men_description', data.description);
-            mod.set('men_icon', data.icon);
-            mod.set('men_tip', data.tip);
-            mod.set('men_notes', data.notes);
+            mod.set('opt_key', data.key);
+            mod.set('opt_name', data.name);
+            mod.set('opt_description', data.description);
+            mod.set('opt_icon', data.icon);
+            mod.set('opt_tip', data.tip);
+            mod.set('opt_xtype', data.xtype);
+            mod.set('opt_notes', data.notes);
 
             key.setValue(data.key);
             name.setValue(data.name);
             description.setValue(data.description);
             icon.setValue(data.icon);
             tip.setValue(data.tip);
-            notes.setValue(data.notes);            
+            xtype.setValue(data.xtype);
+            notes.setValue(data.notes);
         }
     },
 
     onSolutionClosed: function() {
         const mod = this.getViewModel(),
-        key = this.lookupReference('key'),
-        name = this.lookupReference('name'),
-        description = this.lookupReference('description'),
-        icon = this.lookupReference('icon'),
-        tip = this.lookupReference('tip'),
-        notes = this.lookupReference('notes');
+            key = this.lookupReference('key'),
+            name = this.lookupReference('name'),
+            description = this.lookupReference('description'),
+            icon = this.lookupReference('icon'),
+            tip = this.lookupReference('tip'),
+            xtype = this.lookupReference('xtype'),
+            notes = this.lookupReference('notes');
 
-        mod.set('men_key', null);
-        mod.set('men_name', null);
-        mod.set('men_description', null);
-        mod.set('men_icon', null);
-        mod.set('men_tip', null);
-        mod.set('men_notes', null);
-
+        mod.set('opt_key', null);
+        mod.set('opt_name', null);
+        mod.set('opt_description', null);
+        mod.set('opt_icon', null);
+        mod.set('opt_tip', null);
+        mod.set('opt_xtype', null);
+        mod.set('opt_notes', null);
+            
         key.reset();
         name.reset();
         description.reset();
         icon.reset();
         tip.reset();
+        xtype.reset();
         notes.reset();
-
     },
 
     onEdit: function() {
@@ -109,14 +114,16 @@ Ext.define('App.view.main.operation.solutions.13-menu.MenuController', {
             description = this.lookupReference('description'),
             icon = this.lookupReference('icon'),
             tip = this.lookupReference('tip'),
+            xtype = this.lookupReference('xtype'),
             notes = this.lookupReference('notes');
-            
-        key.setValue(mod.get('men_key'));
-        name.setValue(mod.get('men_name'));
-        description.setValue(mod.get('men_description'));
-        icon.setValue(mod.get('men_icon'));
-        tip.setValue(mod.get('men_tip'));
-        notes.setValue(mod.get('men_notes'));
+        
+        key.setValue(mod.get('opt_key'));
+        name.setValue(mod.get('opt_name'));
+        description.setValue(mod.get('opt_description'));
+        icon.setValue(mod.get('opt_icon'));
+        tip.setValue(mod.get('opt_tip'));
+        xtype.setValue(mod.get('opt_xtype'));
+        notes.setValue(mod.get('opt_notes'));
             
         mod.set('editing', false);
     },
@@ -129,17 +136,19 @@ Ext.define('App.view.main.operation.solutions.13-menu.MenuController', {
             description = this.lookupReference('description').getValue(),
             icon = this.lookupReference('icon').getValue(),
             tip = this.lookupReference('tip').getValue(),
+            xtype = this.lookupReference('xtype').getValue(),
             notes = this.lookupReference('notes').getValue();
         
         Ext.Ajax.request({
-            url: Session.getScriptsPath('menu', 'setmen'),
-        
+            url: Session.getScriptsPath('option', 'setopt'),
+
             params: {
                 IhQYw45L6i: Session.getId(),
-                menuid: mod.get('menuId'),
+                optionid: mod.get('optionId'),
                 ke: key,
                 na: name,
                 de: description,
+                xt: xtype,
                 ic: icon,
                 ti: tip,
                 no: notes
@@ -175,14 +184,15 @@ Ext.define('App.view.main.operation.solutions.13-menu.MenuController', {
                 name: name
             };
 
-            mod.set('men_key', key);
-            mod.set('men_name', name);
-            mod.set('men_description', description);
-            mod.set('men_icon', icon);
-            mod.set('men_tip', tip);
-            mod.set('men_notes', notes);
+            mod.set('opt_key', key);
+            mod.set('opt_name', name);
+            mod.set('opt_description', description);
+            mod.set('opt_icon', icon);
+            mod.set('opt_tip', tip);
+            mod.set('opt_xtype', xtype);
+            mod.set('opt_notes', notes);
             
-            me.fireEvent('menudatachanged', info);
+            me.fireEvent('optiondatachanged', info);
         }
     }
 });

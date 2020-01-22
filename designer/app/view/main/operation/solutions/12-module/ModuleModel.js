@@ -1,6 +1,6 @@
 Ext.define('App.view.main.operation.solutions.12-module.ModuleModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.operation-solutions-module-module',
+    alias: 'viewmodel.operation-solutions-module',
 
     data: {
         editing: false,

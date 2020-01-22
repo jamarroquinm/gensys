@@ -9,9 +9,9 @@ Ext.define('App.view.main.operation.solutions.12-module.Module',{
         'Ext.form.RadioGroup'
     ],
 
-    controller: 'operation-solutions-module-module',
+    controller: 'operation-solutions-module',
     viewModel: {
-        type: 'operation-solutions-module-module'
+        type: 'operation-solutions-module'
     },
 
     layout: {

@@ -1,7 +1,7 @@
 
-Ext.define('App.view.main.operation.solutions.13-menu.NewMenu',{
+Ext.define('App.view.main.operation.solutions.14-option.NewOption',{
     extend: 'Ext.form.Panel',
-    xtype: 'newmenu',
+    xtype: 'newoption',
 
     requires: [
         'Ext.form.field.TextArea'

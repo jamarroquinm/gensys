@@ -8,9 +8,9 @@ Ext.define('App.view.main.operation.solutions.13-menu.Menu',{
         'Ext.toolbar.Spacer'
     ],
 
-    controller: 'operation-solutions-menu-menu',
+    controller: 'operation-solutions-menu',
     viewModel: {
-        type: 'operation-solutions-menu-menu'
+        type: 'operation-solutions-menu'
     },
 
     layout: {

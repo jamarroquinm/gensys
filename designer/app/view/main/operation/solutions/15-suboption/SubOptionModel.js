@@ -1,6 +1,6 @@
-Ext.define('App.view.main.operation.solutions.14-option.OptionModel', {
+Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionModel', {
     extend: 'Ext.app.ViewModel',
-    alias: 'viewmodel.operation-solutions-option',
+    alias: 'viewmodel.operation-solutions-suboption',
 
     data: {
         editing: false,

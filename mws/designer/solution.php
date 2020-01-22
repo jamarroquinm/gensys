@@ -16,11 +16,7 @@ if( $session["ok"]) {
     }
     else if ( $ope == 'getsol') {
 
-        $solutionId = false;
-
-        if( isset($_REQUEST['solutionid']) ) {
-            $solutionId = getIntValueOf('solutionid');
-        }
+        $solutionId = getIntValueOf('solutionid');
 
         if( $solutionId ) {
             $data = getSolutionData($solutionId);
@@ -368,19 +364,19 @@ function getMenuOfModule($id) {
 function getOptionsOfMenu($id) {
 
     $sql = "Select
-        concat('o-', right( concat('00000', id), 5 ) ) as id,
-        id as internalId,
-        `key`,
-        name,
-        description,
-        name as text,
-        'x-fas fa-minus' as iconCls
-    From
-        `option`
-    Where
-        menuId = ? and active = 1 and deleted = 0
-    Order by
-        `order`";
+                concat('o-', right( concat('00000', id), 5 ) ) as id,
+                id as internalId,
+                `key`,
+                name,
+                description,
+                name as text,
+                'x-fas fa-minus' as iconCls
+            From
+                `option`
+            Where
+                menuId = ? and active = 1 and deleted = 0
+            Order by
+                `order`";
 
     $args = array($id);
     $options = read($sql, $args);

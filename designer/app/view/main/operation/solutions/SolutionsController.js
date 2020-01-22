@@ -2,6 +2,25 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.operation-solutions-solutions',
 
+    dataForms: { 
+        R: 1,
+        M: 2,
+        m: 3,
+        n: 4,
+        o: 5,
+        s: 6,
+        O: 7,
+        C: 8
+    },
+
+    loadingEvents: {
+        m: 'loadmodule',
+        n: 'loadmenu',
+        o: 'loadoption',
+        s: 'loadsuboption'
+    },
+
+
     listen: {
         controller: {
             '*': {
@@ -14,7 +33,9 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
                 optiondatachanged: 'onOptionDataChanged',
 
                 addmodule: 'onAddModule',
-                addmenu: 'onAddMenu'
+                addmenu: 'onAddMenu',
+                addoption: 'onAddOption',
+                addSuboption: 'onAddSubOption'
             }
         }
     },
@@ -183,23 +204,7 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
 
     onSolutonNodeSelected(tree, record) {
         const mod = this.getViewModel(),
-            idNode = record.get('id'),
-            forms = {
-                R: 1,
-                M: 2,
-                O: 3,
-                C: 4,
-                m: 5,
-                n: 6,
-                o: 7,
-                s: 0
-            },
-            events = {
-                m: 'loadmodule',
-                n: 'loadmenu',
-                o: 'loadoption',
-                s: 'loadsuboption'
-            };
+            idNode = record.get('id');
             
         var nodeId, nodeType, internalId, activeIdx, event;
 
@@ -217,12 +222,12 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
             nodeId = idNode;
             nodeType = idNode.substr(0,1),
             internalId = record.get('internalId')
-            event = events[nodeType];
+            event = this.loadingEvents[nodeType];
 
             this.fireEvent(event, internalId);
         }
 
-        activeIdx = forms.hasOwnProperty(nodeType) ? forms[nodeType] : 0 ;
+        activeIdx = this.dataForms.hasOwnProperty(nodeType) ? this.dataForms[nodeType] : 0 ;
 
         mod.set('nodeId', nodeId);
         mod.set('nodeType', nodeType);
@@ -284,6 +289,16 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
             win.setEvent('addmenu');
             win.setTitle('New menu');
         }
+        else if( nodeType == 'n') {
+            form = Ext.widget('newoption');
+            win.setEvent('addoption');
+            win.setTitle('New menu option');
+        }
+        else if( nodeType == 'o') {
+            form = Ext.widget('newsuboption');
+            win.setEvent('addsuboption');
+            win.setTitle('New option suboption');
+        }
         else {
             console.log('Opcion no identificada! | Solucion id:', solutionId, ' | Tipo:', nodeType, ' | Id:', nodeId);
             return;
@@ -340,6 +355,18 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
     },
 
     onAddMenu(values) {
+        this.addElement(values, 'menu', 'addmen');
+    },
+
+    onAddOption(values) {
+        this.addElement(values, 'option', 'addopt');
+    },
+
+    onAddSubOption(values) {
+        this.addElement(values, 'suboption', 'addsub');
+    },
+
+    addElement(values, script, operation) {
         const mod = this.getViewModel(),
             nodeId = mod.get('nodeId'),
             internalId = mod.get('internalId'),
@@ -349,11 +376,11 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
         if( record ) {
 
             Ext.Ajax.request({
-                url: Session.getScriptsPath('menu', 'addmen'),
+                url: Session.getScriptsPath(script, operation),
             
                 params: {
                     'IhQYw45L6i': Session.getId(),
-                    mid: internalId,
+                    iid: internalId,
                     key: values.key,
                     name: values.name,
                     description: values.description
@@ -382,6 +409,4 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
             throw new Error('Unable to find the node');
         }
     }
-
-
 });

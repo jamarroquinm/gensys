@@ -219,26 +219,37 @@ Ext.define('App.view.main.operation.solutions.Solutions',{
                             }
                         },
                         {
+                            // R - 1
                             xtype: 'define-solution'
                         },
                         {
+                            // M - 2
                             xtype: 'define-modules'
                         },
                         {
-                            xtype: 'define-operationdb'
-                        },
-                        {
-                            xtype: 'define-centraldb'
-                        },
-                        {
+                            // m - 3
                             xtype: 'define-module'
                         },
                         {
+                            // n - 4
                             xtype: 'define-menu'
                         },
                         {
+                            // o - 5
                             xtype: 'define-option'
-                        }
+                        },
+                        {
+                            // s - 6
+                            xtype: 'define-suboption'
+                        },
+                        {
+                            // O - 7
+                            xtype: 'define-operationdb'
+                        },
+                        {
+                            // C - 8
+                            xtype: 'define-centraldb'
+                        },
                     ],
 
                     bind: {
