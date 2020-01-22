@@ -30,6 +30,20 @@ if( $session["ok"]) {
         }
 
     }
+    else if ( $ope == 'addsol') {
+
+        $key = getCharValueOf('key');
+        $name = getCharValueOf('name');
+        $description = getCharValueOf('description');
+
+        if( $key and $name) {
+            $data = addSolution($key, $name, $description);
+        }
+        else {
+            setError(3001, 'Impossible to execute');
+        }
+
+    }
     else if ( $ope == 'getele' ) {
 
         $solutionId = false;
@@ -212,7 +226,7 @@ function getAllSolutions() {
             Order by
                 name";
     $args = array(1, 0);
-    $solutions = read($sql, $args, true);
+    $solutions = read($sql, $args);
 
     setError(0);
     return $solutions;
@@ -234,9 +248,24 @@ function getSolutionRoot($id) {
     return $sections;
 }
 
+function addSolution($key, $name, $description) {
+
+    $sql = "Insert into solution (`key`, name, description) values (?,?,?)";
+    $args = array($key, $name, $description);
+
+    $id = execute($sql, $args);
+
+    $solution = getSolutionData($id);
+    
+    setError(0);
+    return $solution;
+
+}
+
 function getSolutionData($id) {
 
     $sql = "Select
+                id,
                 `key`,
                 name,
                 description,
@@ -253,11 +282,10 @@ function getSolutionData($id) {
             Where
                 id = ?";
     $args = array($id);
-    $solution = get($sql, $args, true);
+    $solution = get($sql, $args);
 
     setError(0);
     return $solution;
-
 }
 
 function getSolutionElements($nodeId, $solutionId) {
@@ -304,7 +332,7 @@ function getModulesOfSolution($id){
                 name";
 
     $args = array($id);
-    $modules = read($sql, $args, true);
+    $modules = read($sql, $args);
     
     setError(0);
     
@@ -328,7 +356,7 @@ function getMenuOfModule($id) {
         `order`";
 
     $args = array($id);
-    $menu = read($sql, $args, true);
+    $menu = read($sql, $args);
 
     setError(0);
 
@@ -352,7 +380,7 @@ function getOptionsOfMenu($id) {
         `order`";
 
     $args = array($id);
-    $options = read($sql, $args, true);
+    $options = read($sql, $args);
 
     setError(0);
 
@@ -377,7 +405,7 @@ function getSuboptionsOfOption($id) {
         `order`";
 
     $args = array($id);
-    $suboptions = read($sql, $args, true);
+    $suboptions = read($sql, $args);
 
     setError(0);
 
@@ -393,7 +421,7 @@ function setSolutionData( $solutionId, $key, $name, $description, $solutionNotes
             Where
                 id = ?";
     $args = array($key, $name, $description, $solutionNotes, $multitenant, $multilingual, $solutionId);
-    execute($sql, $args, true);
+    execute($sql, $args);
 
     setError(0);
     return true;
@@ -406,7 +434,7 @@ function setSolutionModuleNotes( $solutionId, $modulesNotes ) {
             Where
                 id = ?";
     $args = array($modulesNotes, $solutionId);
-    execute($sql, $args, true);
+    execute($sql, $args);
 
     setError(0);
     return true;
@@ -419,7 +447,7 @@ function setSolutionOperaDataBaseInfo( $solutionId, $operationalDbNotes, $operat
             Where
                 id = ?";
     $args = array($operationalDbPrefix, $operationalDbNotes, $solutionId);
-    execute($sql, $args, true);
+    execute($sql, $args);
 
     setError(0);
     return true;
@@ -432,7 +460,7 @@ function setSolutionCentralDataBaseInfo( $solutionId, $centralDbNotes, $centralD
             Where
                 id = ?";
     $args = array($centralDbName, $centralDbNotes, $solutionId);
-    execute($sql, $args, true);
+    execute($sql, $args);
 
     setError(0);
     return true;

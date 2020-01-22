@@ -1,56 +1,45 @@
 
 Ext.define('App.view.main.operation.solutions.NewSolution',{
-    extend: 'Ext.window.Window',
+    extend: 'Ext.form.Panel',
     xtype: 'newsolution',
 
     requires: [
-        'Ext.form.Panel',
         'Ext.form.field.TextArea'
     ],
 
-    controller: 'main-operation-solutions-newsolution',
-    viewModel: {
-        type: 'main-operation-solutions-newsolution'
-    },
-
-    width: 600,
-    modal: true,
-    resizable: false,
-
-    layout: 'fit',
-    title: 'New Solution',
+    width: 500,
+    border: false,
 
     items: [
         {
             xtype: 'form',
             bodyPadding: 10,
+            
             items: [
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Key',
-                    name: 'key'
+                    name: 'key',
+                    allowBlank: false,
+                    maxLength: 15
+                    //TODO: Validar que no se repita
                 },
                 {
                     xtype: 'textfield',
                     anchor: '100%',
                     fieldLabel: 'Name',
-                    name: 'name'
+                    name: 'name',
+                    allowBlank: false,
+                    maxLength: 60
                 },
                 {
                     xtype: 'textareafield',
                     anchor: '100%',
                     fieldLabel: 'Description',
-                    name: 'description'
+                    name: 'description',
+                    maxLength: 300
                 }
             ]
-        }
-    ],
-
-    buttons: [
-        {
-            text: 'Save',
-            iconCls: 'x-far fa-save',
-            scale: 'medium',
         }
     ]
 });

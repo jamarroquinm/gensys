@@ -126,6 +126,10 @@ Ext.define('App.view.main.operation.solutions.Solutions',{
                                     iconCls: 'x-fas fa-plus-circle',
                                     margin: '0 3 0 0',
 
+                                    listeners: {
+                                        click: 'newElement'
+                                    },
+
                                     bind: {
                                         disabled: '{!canAdd}'
                                     }

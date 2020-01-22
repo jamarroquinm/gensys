@@ -5,20 +5,10 @@ Ext.define('App.view.main.operation.solutions.1-solution.SolutionController', {
     listen: {
         controller: {
             '*': {
-                userLogged: 'onUserLogged',
                 solutionopened: 'onSolutionOpened',
                 solutionclosed: 'onSolutionClosed'
             }
         }
-    },
-
-    onUserLogged(obj) {
-        // const mod = this.getViewModel(),
-        //     store = mod.getStore('solution'),
-        //     proxy = store.getProxy();
-
-        // proxy.setExtraParam('IhQYw45L6i', obj.id);
-        debugger;
     },
 
 

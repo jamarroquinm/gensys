@@ -7,6 +7,8 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
             '*': {
                 solutionselected: 'onSolutionSelected',
                 solutionnamechanged: 'onSolutionNameChanged',
+                addsolution: 'onAddSolution',
+
                 moduledatachanged: 'onModuleDataChanged',
                 menudatachanged: 'onMenuDataChanged',
                 optiondatachanged: 'onOptionDataChanged'
@@ -24,6 +26,7 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
 
 
 
+    // Solutions
     onOpenSolution() {
         const win = Ext.widget('opensolution');
 
@@ -31,45 +34,64 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
     },
 
     onNewSolution() {
-        const win = Ext.widget('newsolution');
+        const win = Ext.widget('newelement'),
+            form = Ext.widget('newsolution');
 
+        win.setEvent('addsolution');
+        win.setTitle('New solution');
+
+        win.add(form);
         win.show();
     },
 
+    onAddSolution(values) {
+        const mod = this.getViewModel(),
+            store = this.getStore('solution'),
+            proxy = store.getProxy(),
+            me = this;
 
+        Ext.Ajax.request({
+            url: Session.getScriptsPath('solution', 'addsol'),
+        
+            params: {
+                'IhQYw45L6i': Session.getId(),
+                key: values.key,
+                name: values.name,
+                description: values.description
+            },
+        
+            success: function(response, opts) {
+                var obj = Ext.decode(response.responseText);
+        
+                if(obj.error === 0) {
+                    setSolution(obj.data);
+                }
+                else {
+                    Ext.Msg.alert('Error', obj.info);
+                }
+            },
+        
+            failure: function(response, opts) {
+                Ext.Msg.alert('Error', 'Error');
+            },
 
-    onSolutionNameChanged(name) {
-        const store = this.getStore('solution');
+            scope: this
+        });
 
-        store.setRoot({
-            text: name,
-            iconCls: 'x-fas fa-globe'
-        }); 
+        function setSolution(data) {
+            
+            mod.set('solutionId', data.id);
+
+            store.setRoot({
+                text: values.name,
+                iconCls: 'x-fas fa-globe'
+            });            
+
+            proxy.setExtraParam('solutionid', data.id);
+
+            me.fireEvent('solutionopened', data);
+        }
     },
-
-    onModuleDataChanged(info) {
-        const tree = this.lookupReference('solutiontree'),
-            node = tree.getSelection()[0];
-
-        node.set('text', info.name);
-        node.set('iconCls', info.icon);
-    },
-
-    onMenuDataChanged(info) {
-        const tree = this.lookupReference('solutiontree'),
-            node = tree.getSelection()[0];
-
-        node.set('text', info.name);
-    },
-
-    onOptionDataChanged(info) {
-        const tree = this.lookupReference('solutiontree'),
-            node = tree.getSelection()[0];
-
-        node.set('text', info.name);
-    },
-
-
 
     onSolutionSelected(info) {
         const mod = this.getViewModel(),
@@ -92,12 +114,7 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
                     setSolution(obj.data);
                 }
                 else {
-                    if( obj.success ) {
-                        Ext.Msg.alert('Error', 'Error');
-                    }
-                    else {
-                        Ext.Msg.alert('Error', 'Error');
-                    }
+                    Ext.Msg.alert('Error', obj.info);
                 }
             },
         
@@ -160,7 +177,6 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
         }
     },
 
-
     onSolutonNodeSelected(tree, record) {
         const mod = this.getViewModel(),
             node = record.get('id'),
@@ -204,5 +220,51 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
         mod.set('nodeId', nodeId);
         mod.set('nodeType', nodeType);
         mod.set('activeDefinitionForm', activeIdx );
+    },
+
+
+        
+    onSolutionNameChanged(name) {
+        const store = this.getStore('solution');
+
+        store.setRoot({
+            text: name,
+            iconCls: 'x-fas fa-globe'
+        }); 
+    },
+
+    onModuleDataChanged(info) {
+        const tree = this.lookupReference('solutiontree'),
+            node = tree.getSelection()[0];
+
+        node.set('text', info.name);
+        node.set('iconCls', info.icon);
+    },
+
+    onMenuDataChanged(info) {
+        const tree = this.lookupReference('solutiontree'),
+            node = tree.getSelection()[0];
+
+        node.set('text', info.name);
+    },
+
+    onOptionDataChanged(info) {
+        const tree = this.lookupReference('solutiontree'),
+            node = tree.getSelection()[0];
+
+        node.set('text', info.name);
+    },
+
+
+    // Menu Operativo
+    newElement() {
+        const mod = this.getViewModel(),
+            solutionId = mod.get('solutionId'),
+            nodeType = mod.get('nodeType'),
+            nodeId = mod.get('nodeId');
+
+        console.log(solutionId, nodeType, nodeId);
+        
     }
+
 });
