@@ -11,7 +11,9 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
 
                 moduledatachanged: 'onModuleDataChanged',
                 menudatachanged: 'onMenuDataChanged',
-                optiondatachanged: 'onOptionDataChanged'
+                optiondatachanged: 'onOptionDataChanged',
+
+                addmodule: 'onAddModule'
             }
         }
     },
@@ -201,11 +203,11 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
 
         if( node == 'root' ) {
             nodeType = 'R';
-            nodeId = 0;
+            nodeId = nodeType; //El id es el mismo que el tipo
         }
         else if( node == 'M' || node == 'O' || node == 'C' ) {
             nodeType = node;
-            nodeId = 0;
+            nodeId = nodeType; //El id es el mismo que el tipo
         }
         else {
             nodeType = node.substr(0,1),
@@ -278,6 +280,56 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
 
         win.add(form);
         win.show();
+        
+    },
+
+    onAddModule(values) {
+        const mod = this.getViewModel(),
+            solutionId = mod.get('solutionId'),
+            nodeId = mod.get('nodeId'),
+            store = mod.getStore('solution'),
+            record = store.getNodeById(nodeId);
+
+        if( record ) {
+
+            Ext.Ajax.request({
+                url: Session.getScriptsPath('module', 'addmod'),
+            
+                params: {
+                    'IhQYw45L6i': Session.getId(),
+                    sid: solutionId,
+                    key: values.key,
+                    type: values.type,
+                    name: values.name,
+                    description: values.description
+                },
+            
+                success: function(response, opts) {
+                    var obj = Ext.decode(response.responseText);
+            
+                    if(obj.error === 0) {
+                        record.expand();
+                        addModule(obj.data);
+                    }
+                    else {
+                        Ext.Msg.alert('Error', obj.info);
+                    }
+                },
+            
+                failure: function(response, opts) {
+                    Ext.Msg.alert('Error', 'Error');
+                },
+
+                scope: this
+            });
+        }
+        else {
+            throw new Error('Unable to find the node');
+        }
+
+        function addModule(data) {
+            var node = record.appendChild(data);
+        }
         
     }
 

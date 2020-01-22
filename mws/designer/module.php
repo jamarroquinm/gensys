@@ -57,6 +57,21 @@ if( $session["ok"]) {
             setError(3001, 'Impossible to execute');
         }
     }
+    else if( $ope == 'addmod' ) {
+        
+        $sid = getIntValueOf('sid');
+        $key = getCharValueOf('key');
+        $type = getCharValueOf('type');
+        $name = getCharValueOf('name');
+        $description = getCharValueOf('description');
+
+        if( $key and $name) {
+            $data = addModule($sid, $key, $name, $description, $type);
+        }
+        else {
+            setError(3001, 'Impossible to execute');
+        }
+    }
     else {
         setError(3000, 'Impossible to proceed');
     }
@@ -108,7 +123,6 @@ function getModuleData($id) {
 
 }
 
-
 function setModuleData($moduleId, $key, $name, $description, $type, $apiFolder, $contentFolder, $loginScript, $unlockScript, $changeScript, $notes) {
 
     $sql = "Update module set
@@ -148,6 +162,31 @@ function setModuleData($moduleId, $key, $name, $description, $type, $apiFolder, 
                 id = ?";
     $args = array($moduleId);
     $module = get($sql, $args, true);
+
+    setError(0);
+
+    return $module;
+}
+
+function addModule($solutionId, $key, $name, $description, $type) {
+
+    $sql = "Insert into module (languageId, solutionId, `key`, name, description, type) values (?,?,?,?,?,?)";
+    $args = array( 'es', $solutionId, $key, $name, $description, $type);
+    $id = execute($sql, $args);
+
+    $sql = "Select
+                concat('m-', right( concat('00000', id), 5 ) ) as id,
+                `key`,
+                name as text,
+                description,
+                if( type = 'm', 'x-fas fa-mobile-alt', 'x-fas fa-desktop' ) as iconCls
+            From
+                module
+            Where
+                id = ?";
+
+    $args = array($id);
+    $module = get($sql, $args);
 
     setError(0);
 

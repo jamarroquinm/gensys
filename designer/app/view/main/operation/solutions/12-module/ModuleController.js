@@ -6,8 +6,7 @@ Ext.define('App.view.main.operation.solutions.12-module.ModuleController', {
         controller: {
             '*': {
                 solutionclosed: 'onSolutionClosed',
-                loadmodule: 'onLoadModuleInfo',
-                addmodule: 'onAddModule'
+                loadmodule: 'onLoadModuleInfo'
             }
         }
     },
@@ -230,10 +229,5 @@ Ext.define('App.view.main.operation.solutions.12-module.ModuleController', {
 
             me.fireEvent('moduledatachanged', info);
         }
-    },
-
-    onAddModule(values) {
-        console.log(values);
-        
     }
 });
