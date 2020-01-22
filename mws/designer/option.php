@@ -38,26 +38,18 @@ if( $session["ok"]) {
     }
     else if( $ope == 'setopt' ) {
 
-        $optionId = false;
-        $key = false;
-        $name = false;
-        $description = false;
-        $icon = false;
-        $tip = false;
-        $xtype = false;
-        $notes = false;
-
-        if( isset($_REQUEST['optionid']) ) $optionId = $_REQUEST['optionid']; 
-        if( isset($_REQUEST['ke']) ) $key = $_REQUEST['ke']; 
-        if( isset($_REQUEST['na']) ) $name = $_REQUEST['na']; 
-        if( isset($_REQUEST['de']) ) $description = $_REQUEST['de']; 
-        if( isset($_REQUEST['xt']) ) $xtype = $_REQUEST['xt']; 
-        if( isset($_REQUEST['ic']) ) $icon = $_REQUEST['ic']; 
-        if( isset($_REQUEST['ti']) ) $tip = $_REQUEST['ti']; 
-        if( isset($_REQUEST['no']) ) $notes = $_REQUEST['no']; 
+        $optionId = getIntValueOf('optionid');
+        $key = getCharValueOf('ke');
+        $name = getCharValueOf('na');
+        $description = getCharValueOf('de');
+        $xtype = getCharValueOf('xt');
+        $type = getCharValueOf('ty');
+        $icon = getCharValueOf('ic');
+        $tip = getCharValueOf('ti');
+        $notes = getCharValueOf('no');
         
         if( $optionId ) {
-            $data = setOptionData($optionId, $key, $name, $description, $xtype, $icon, $tip, $notes);
+            $data = setOptionData($optionId, $key, $name, $description, $xtype, $type, $icon, $tip, $notes);
         }
         else {
             setError(3001, 'Impossible to execute');
@@ -95,6 +87,7 @@ function getOptionData($id) {
                 `key`,
                 name,
                 description,
+                type,
                 xtype,
                 icon,
                 tip,
@@ -111,13 +104,14 @@ function getOptionData($id) {
 
 }
 
-function setOptionData($optionId, $key, $name, $description, $xtype, $icon, $tip, $notes) {
+function setOptionData($optionId, $key, $name, $description, $xtype, $type, $icon, $tip, $notes) {
 
     $sql = "Update `option` set
                 `key` = ?,
                 `name` = ?,
                 `description` = ?,
                 `xtype` = ?,
+                `type` = ?,
                 `icon` = ?,
                 `tip` = ?,
                 `notes` = ?
@@ -128,6 +122,7 @@ function setOptionData($optionId, $key, $name, $description, $xtype, $icon, $tip
         $name,
         $description,
         $xtype,
+        $type,
         $icon,
         $tip,
         $notes,

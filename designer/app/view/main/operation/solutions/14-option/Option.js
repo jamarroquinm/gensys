@@ -4,6 +4,7 @@ Ext.define('App.view.main.operation.solutions.14-option.Option',{
 
     requires: [
         'Ext.form.Panel',
+        'Ext.form.field.ComboBox',
         'Ext.toolbar.Spacer'
     ],
 
@@ -133,6 +134,33 @@ Ext.define('App.view.main.operation.solutions.14-option.Option',{
                     }
                 },
                 {
+                    xtype: 'combobox',
+                    anchor: '100%',
+                    name: 'type',
+                    
+                    reference: 'type',
+                    publishes: 'value',
+
+                    fieldLabel: 'Type',
+                    editable: false,
+                    forceSelection: true,
+                    
+                    store: [
+                        [ 's', 'Submenu'],
+                        [ 'x', 'Component'],
+                        [ 'c', 'Container']
+                    ],
+                    queryMode: 'local',
+
+                    bind: {
+                        disabled: '{!editing}'
+                    },
+
+                    listeners: {
+                        change: 'onChangeType'
+                    }
+                },
+                {
                     xtype: 'textfield',
                     fieldLabel: 'xType',
                     anchor: '100%',
@@ -144,7 +172,7 @@ Ext.define('App.view.main.operation.solutions.14-option.Option',{
                     regex: /^[^<>;&'`]+$/,
                     regexText: 'Invalid',
                     bind: {
-                        disabled: '{!editing}'
+                        disabled: '{!xtypeEditable}'
                     }
                 },
                 {

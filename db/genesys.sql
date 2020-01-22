@@ -240,11 +240,12 @@ CREATE  TABLE IF NOT EXISTS `gensys`.`suboption` (
   `notes` text,
 
   `xtype` VARCHAR(60), 
-  `order` TINYINT NOT NULL DEFAULT 0,
 
   `titleform` VARCHAR(50), 
   `dataform` VARCHAR(30), 
   `store` VARCHAR(30), 
+
+  `order` TINYINT NOT NULL DEFAULT 0,
 
   `active` TINYINT NOT NULL DEFAULT 1,
   `deleted` TINYINT NOT NULL DEFAULT 0, 
