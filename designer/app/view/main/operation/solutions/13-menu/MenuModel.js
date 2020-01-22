@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.6-menu.MenuModel', {
+Ext.define('App.view.main.operation.solutions.13-menu.MenuModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.operation-solutions-menu-menu',
 

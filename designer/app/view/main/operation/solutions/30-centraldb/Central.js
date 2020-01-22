@@ -1,5 +1,5 @@
 
-Ext.define('App.view.main.operation.solutions.4-centraldb.Central',{
+Ext.define('App.view.main.operation.solutions.30-centraldb.Central',{
     extend: 'Ext.container.Container',
     xtype: 'define-centraldb',
 

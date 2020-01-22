@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.7-option.OptionModel', {
+Ext.define('App.view.main.operation.solutions.14-option.OptionModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.operation-solutions-option-option',
 

@@ -261,9 +261,23 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
         const mod = this.getViewModel(),
             solutionId = mod.get('solutionId'),
             nodeType = mod.get('nodeType'),
-            nodeId = mod.get('nodeId');
+            nodeId = mod.get('nodeId'),
+            win = Ext.widget('newelement');
 
-        console.log(solutionId, nodeType, nodeId);
+        var form;
+
+        if( nodeType == 'M') {
+            form = Ext.widget('newmodule');
+            win.setEvent('addmodule');
+            win.setTitle('New module');
+        }
+        else {
+            console.log('Opcion no identificada! | Solucion id:', solutionId, ' | Tipo:', nodeType, ' | Id:', nodeId);
+            return;
+        }
+
+        win.add(form);
+        win.show();
         
     }
 

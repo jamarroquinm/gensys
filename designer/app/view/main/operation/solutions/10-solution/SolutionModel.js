@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.1-solution.SolutionModel', {
+Ext.define('App.view.main.operation.solutions.10-solution.SolutionModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.operation-solutions-solution-solution',
 

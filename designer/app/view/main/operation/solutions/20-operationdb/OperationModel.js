@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.3-operationdb.OperationModel', {
+Ext.define('App.view.main.operation.solutions.20-operationdb.OperationModel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.operation-solutions-operationdb-operation',
 

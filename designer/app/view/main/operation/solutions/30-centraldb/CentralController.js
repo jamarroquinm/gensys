@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.4-centraldb.CentralController', {
+Ext.define('App.view.main.operation.solutions.30-centraldb.CentralController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.operation-solutions-centraldb-central',
 

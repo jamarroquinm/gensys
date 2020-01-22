@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.7-option.OptionController', {
+Ext.define('App.view.main.operation.solutions.14-option.OptionController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.operation-solutions-option-option',
 

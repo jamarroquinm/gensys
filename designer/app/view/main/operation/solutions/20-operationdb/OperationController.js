@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.3-operationdb.OperationController', {
+Ext.define('App.view.main.operation.solutions.20-operationdb.OperationController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.operation-solutions-operationdb-operation',
 

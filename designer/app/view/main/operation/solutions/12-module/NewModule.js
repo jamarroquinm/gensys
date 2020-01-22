@@ -1,10 +1,12 @@
 
-Ext.define('App.view.main.operation.solutions.NewSolution',{
+Ext.define('App.view.main.operation.solutions.11-modules.NewModule',{
     extend: 'Ext.form.Panel',
-    xtype: 'newsolution',
+    xtype: 'newmodule',
 
     requires: [
-        'Ext.form.field.TextArea'
+        'Ext.form.field.TextArea',
+        'Ext.form.RadioGroup',
+        'Ext.form.field.Radio'
     ],
 
     width: 500,
@@ -17,6 +19,15 @@ Ext.define('App.view.main.operation.solutions.NewSolution',{
             
             items: [
                 {
+                    xtype: 'radiogroup',
+                    fieldLabel: 'Type',
+                    reference: 'type',
+                    items: [
+                        { boxLabel: 'Desktop', name: 'type', inputValue: 'd', checked: true },
+                        { boxLabel: 'Mobile', name: 'type', inputValue: 'm' }
+                    ]
+                },
+                {
                     xtype: 'textfield',
                     fieldLabel: 'Short key',
                     name: 'key',
@@ -26,7 +37,6 @@ Ext.define('App.view.main.operation.solutions.NewSolution',{
                     maxLength: 15,
                     regex: /^[^<>;&'`]+$/,
                     regexText: 'Invalid'
-                    //TODO: Validar que no se repita
                 },
                 {
                     xtype: 'textfield',

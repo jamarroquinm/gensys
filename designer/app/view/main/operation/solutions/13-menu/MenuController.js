@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.6-menu.MenuController', {
+Ext.define('App.view.main.operation.solutions.13-menu.MenuController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.operation-solutions-menu-menu',
 

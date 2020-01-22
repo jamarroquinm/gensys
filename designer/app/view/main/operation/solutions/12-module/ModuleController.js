@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.5-module.ModuleController', {
+Ext.define('App.view.main.operation.solutions.12-module.ModuleController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.operation-solutions-module-module',
 
@@ -6,12 +6,13 @@ Ext.define('App.view.main.operation.solutions.5-module.ModuleController', {
         controller: {
             '*': {
                 solutionclosed: 'onSolutionClosed',
-                loadmodule: 'onLoadModuleInfo'
+                loadmodule: 'onLoadModuleInfo',
+                addmodule: 'onAddModule'
             }
         }
     },
 
-    onLoadModuleInfo: function(id) {
+    onLoadModuleInfo(id) {
         const mod = this.getViewModel(),
             key = this.lookupReference('key'),
             name = this.lookupReference('name'),
@@ -83,7 +84,7 @@ Ext.define('App.view.main.operation.solutions.5-module.ModuleController', {
         }
     },
 
-    onSolutionClosed: function() {
+    onSolutionClosed() {
         const mod = this.getViewModel(),
             key = this.lookupReference('key'),
             name = this.lookupReference('name'),
@@ -120,13 +121,13 @@ Ext.define('App.view.main.operation.solutions.5-module.ModuleController', {
         notes.reset();
     },
 
-    onEdit: function() {
+    onEdit() {
         const mod = this.getViewModel();
 
         mod.set('editing', true);
     },
 
-    onCancel: function() {
+    onCancel() {
         const mod = this.getViewModel(),
             key = this.lookupReference('key'),
             name = this.lookupReference('name'),
@@ -153,7 +154,7 @@ Ext.define('App.view.main.operation.solutions.5-module.ModuleController', {
         mod.set('editing', false);
     },
 
-    onSave: function() {
+    onSave() {
         const mod = this.getViewModel(),
             me = this,
             key = this.lookupReference('key').getValue(),
@@ -229,5 +230,10 @@ Ext.define('App.view.main.operation.solutions.5-module.ModuleController', {
 
             me.fireEvent('moduledatachanged', info);
         }
+    },
+
+    onAddModule(values) {
+        console.log(values);
+        
     }
 });

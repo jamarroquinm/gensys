@@ -1,5 +1,4 @@
-
-Ext.define('App.view.main.operation.solutions.7-option.Option',{
+Ext.define('App.view.main.operation.solutions.14-option.Option',{
     extend: 'Ext.container.Container',
     xtype: 'define-option',
 

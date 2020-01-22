@@ -1,4 +1,4 @@
-Ext.define('App.view.main.operation.solutions.1-solution.SolutionController', {
+Ext.define('App.view.main.operation.solutions.10-solution.SolutionController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.operation-solutions-solution-solution',
 

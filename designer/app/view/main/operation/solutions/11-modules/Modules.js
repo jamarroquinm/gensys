@@ -1,5 +1,5 @@
 
-Ext.define('App.view.main.operation.solutions.2-modules.Modules',{
+Ext.define('App.view.main.operation.solutions.11-modules.Modules',{
     extend: 'Ext.container.Container',
     xtype: 'define-modules',
 

@@ -1,5 +1,5 @@
 
-Ext.define('App.view.main.operation.solutions.6-menu.Menu',{
+Ext.define('App.view.main.operation.solutions.13-menu.Menu',{
     extend: 'Ext.container.Container',
     xtype: 'define-menu',
 

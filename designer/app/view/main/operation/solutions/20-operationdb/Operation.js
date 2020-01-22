@@ -1,5 +1,5 @@
 
-Ext.define('App.view.main.operation.solutions.3-operationdb.Operation',{
+Ext.define('App.view.main.operation.solutions.20-operationdb.Operation',{
     extend: 'Ext.container.Container',
     xtype: 'define-operationdb',
 

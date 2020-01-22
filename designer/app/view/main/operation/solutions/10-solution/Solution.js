@@ -1,5 +1,5 @@
 
-Ext.define('App.view.main.operation.solutions.1-solution.Solution',{
+Ext.define('App.view.main.operation.solutions.10-solution.Solution',{
     extend: 'Ext.container.Container',
     xtype: 'define-solution',
 
