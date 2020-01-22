@@ -1,7 +1,7 @@
 
-Ext.define('App.view.main.operation.solutions.12-module.NewModule',{
+Ext.define('App.view.main.operation.solutions.13-menu.NewMenu',{
     extend: 'Ext.form.Panel',
-    xtype: 'newmodule',
+    xtype: 'newmenu',
 
     requires: [
         'Ext.form.field.TextArea',
@@ -18,15 +18,6 @@ Ext.define('App.view.main.operation.solutions.12-module.NewModule',{
             bodyPadding: 10,
             
             items: [
-                {
-                    xtype: 'radiogroup',
-                    fieldLabel: 'Type',
-                    reference: 'type',
-                    items: [
-                        { boxLabel: 'Desktop', name: 'type', inputValue: 'd', checked: true },
-                        { boxLabel: 'Mobile', name: 'type', inputValue: 'm' }
-                    ]
-                },
                 {
                     xtype: 'textfield',
                     fieldLabel: 'Short key',

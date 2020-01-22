@@ -24,6 +24,20 @@ if( $session["ok"]) {
             setError(3001, 'Impossible to execute');
         }
     }
+    else if( $ope == 'addmen' ) {
+        
+        $mid = getIntValueOf('mid');
+        $key = getCharValueOf('key');
+        $name = getCharValueOf('name');
+        $description = getCharValueOf('description');
+
+        if( $mid and $key and $name) {
+            $data = addMenu($mid, $name, $key, $description);
+        }
+        else {
+            setError(3001, 'Impossible to execute');
+        }
+    }
     else if( $ope == 'setmen' ) {
 
         $menuId = false;
@@ -96,7 +110,6 @@ function getMenuData($id) {
 
 }
 
-
 function setMenuData($menuId, $key, $name, $description, $icon, $tip, $notes) {
 
     $sql = "Update menu set
@@ -122,4 +135,31 @@ function setMenuData($menuId, $key, $name, $description, $icon, $tip, $notes) {
     setError(0);
 
     return true;
+}
+
+function addMenu($moduleId, $name, $key, $description){
+
+    $sql = "Insert into menu (moduleId, `key`, name, description) values (?,?,?,?)";
+    $args = array( $moduleId, $key, $name, $description);
+    $id = execute($sql, $args);
+
+    $sql = "Select
+                concat('n-', right( concat('00000', id), 5 ) ) as id,
+                id as internalId,
+                `key`,
+                name,
+                description,
+                name as text,
+                'x-fas fa-square' as iconCls
+            From
+                menu
+            Where
+                id = ?";
+
+    $args = array($id);
+    $menu = read($sql, $args);
+
+    setError(0);
+
+    return $menu;
 }

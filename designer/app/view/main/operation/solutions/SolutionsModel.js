@@ -5,16 +5,16 @@ Ext.define('App.view.main.operation.solutions.SolutionsModel', {
     data: {
         activeDefinitionForm: 0,
         solutionId: null,
-        nodeType: null,
         nodeId: null,
+        nodeType: null,
+        internalId: null,
         dataOnClipboard: null
     },
 
     formulas: {
         canAdd: {
             bind: {
-                type: '{nodeType}',
-                id: '{nodeId}'
+                type: '{nodeType}'
             },
 
             get: function(data) {

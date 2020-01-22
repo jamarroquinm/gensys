@@ -65,7 +65,7 @@ if( $session["ok"]) {
         $name = getCharValueOf('name');
         $description = getCharValueOf('description');
 
-        if( $key and $name) {
+        if( $sid and $key and $name) {
             $data = addModule($sid, $key, $name, $description, $type);
         }
         else {

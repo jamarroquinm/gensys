@@ -320,6 +320,7 @@ function getModulesOfSolution($id){
 
     $sql = "Select
                 concat('m-', right( concat('00000', id), 5 ) ) as id,
+                id as internalId,
                 `key`,
                 name as text,
                 description,
@@ -342,18 +343,19 @@ function getModulesOfSolution($id){
 function getMenuOfModule($id) {
 
     $sql = "Select
-        concat('n-', right( concat('00000', id), 5 ) ) as id,
-        id as internalId,
-        name,
-        description,
-        name as text,
-        'x-fas fa-square' as iconCls
-    From
-        menu
-    Where
-        moduleId = ? and active = 1 and deleted = 0
-    Order by
-        `order`";
+                concat('n-', right( concat('00000', id), 5 ) ) as id,
+                id as internalId,
+                `key`,
+                name,
+                description,
+                name as text,
+                'x-fas fa-square' as iconCls
+            From
+                menu
+            Where
+                moduleId = ? and active = 1 and deleted = 0
+            Order by
+                `order`";
 
     $args = array($id);
     $menu = read($sql, $args);
@@ -368,6 +370,7 @@ function getOptionsOfMenu($id) {
     $sql = "Select
         concat('o-', right( concat('00000', id), 5 ) ) as id,
         id as internalId,
+        `key`,
         name,
         description,
         name as text,
@@ -392,6 +395,7 @@ function getSuboptionsOfOption($id) {
     $sql = "Select
         concat('s-', right( concat('00000', id), 5 ) ) as id,
         id as internalId,
+        `key`,
         name,
         description,
         name as text,

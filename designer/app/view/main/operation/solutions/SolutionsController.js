@@ -13,7 +13,8 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
                 menudatachanged: 'onMenuDataChanged',
                 optiondatachanged: 'onOptionDataChanged',
 
-                addmodule: 'onAddModule'
+                addmodule: 'onAddModule',
+                addmenu: 'onAddMenu'
             }
         }
     },
@@ -163,8 +164,9 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
         function close() {
             mod.set('activeDefinitionForm', 0);
             mod.set('solutionId', null);
-            mod.set('nodeType', null);
             mod.set('nodeId', null);
+            mod.set('nodeType', null);
+            mod.set('internalId', null);
             mod.set('dataOnClipboard', null);
 
             store.setRoot({
@@ -181,7 +183,7 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
 
     onSolutonNodeSelected(tree, record) {
         const mod = this.getViewModel(),
-            node = record.get('id'),
+            idNode = record.get('id'),
             forms = {
                 R: 1,
                 M: 2,
@@ -199,28 +201,32 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
                 s: 'loadsuboption'
             };
             
-        var nodeId, nodeType, activeIdx, event;
+        var nodeId, nodeType, internalId, activeIdx, event;
 
-        if( node == 'root' ) {
+        if( idNode == 'root' ) {
             nodeType = 'R';
             nodeId = nodeType; //El id es el mismo que el tipo
+            internalId = 0;
         }
-        else if( node == 'M' || node == 'O' || node == 'C' ) {
-            nodeType = node;
-            nodeId = nodeType; //El id es el mismo que el tipo
+        else if( idNode == 'M' || idNode == 'O' || idNode == 'C' ) {
+            nodeType = idNode;
+            nodeId = idNode; //El id es el mismo que el tipo
+            internalId = 0;
         }
         else {
-            nodeType = node.substr(0,1),
-            nodeId = parseInt(node.substr(2));
+            nodeId = idNode;
+            nodeType = idNode.substr(0,1),
+            internalId = record.get('internalId')
             event = events[nodeType];
 
-            this.fireEvent(event, nodeId);
+            this.fireEvent(event, internalId);
         }
 
         activeIdx = forms.hasOwnProperty(nodeType) ? forms[nodeType] : 0 ;
 
         mod.set('nodeId', nodeId);
         mod.set('nodeType', nodeType);
+        mod.set('internalId', internalId);
         mod.set('activeDefinitionForm', activeIdx );
     },
 
@@ -273,6 +279,11 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
             win.setEvent('addmodule');
             win.setTitle('New module');
         }
+        else if( nodeType == 'm') {
+            form = Ext.widget('newmenu');
+            win.setEvent('addmenu');
+            win.setTitle('New menu');
+        }
         else {
             console.log('Opcion no identificada! | Solucion id:', solutionId, ' | Tipo:', nodeType, ' | Id:', nodeId);
             return;
@@ -309,7 +320,7 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
             
                     if(obj.error === 0) {
                         record.expand();
-                        addModule(obj.data);
+                        record.appendChild(obj.data);
                     }
                     else {
                         Ext.Msg.alert('Error', obj.info);
@@ -326,11 +337,51 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
         else {
             throw new Error('Unable to find the node');
         }
+    },
 
-        function addModule(data) {
-            var node = record.appendChild(data);
+    onAddMenu(values) {
+        const mod = this.getViewModel(),
+            nodeId = mod.get('nodeId'),
+            internalId = mod.get('internalId'),
+            store = mod.getStore('solution'),
+            record = store.getNodeById(nodeId);
+
+        if( record ) {
+
+            Ext.Ajax.request({
+                url: Session.getScriptsPath('menu', 'addmen'),
+            
+                params: {
+                    'IhQYw45L6i': Session.getId(),
+                    mid: internalId,
+                    key: values.key,
+                    name: values.name,
+                    description: values.description
+                },
+            
+                success: function(response, opts) {
+                    var obj = Ext.decode(response.responseText);
+            
+                    if(obj.error === 0) {
+                        record.expand();
+                        record.appendChild(obj.data);
+                    }
+                    else {
+                        Ext.Msg.alert('Error', obj.info);
+                    }
+                },
+            
+                failure: function(response, opts) {
+                    Ext.Msg.alert('Error', 'Error');
+                },
+
+                scope: this
+            });
         }
-        
+        else {
+            throw new Error('Unable to find the node');
+        }
     }
+
 
 });
