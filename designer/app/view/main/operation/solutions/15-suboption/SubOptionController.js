@@ -16,9 +16,13 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             key = this.lookupReference('key'),
             name = this.lookupReference('name'),
             description = this.lookupReference('description'),
+            type = this.lookupReference('type'),
+            xtype = this.lookupReference('xtype'),
+            titleform = this.lookupReference('titleform'),
+            table = this.lookupReference('table'),
+            related = this.lookupReference('related'),
             icon = this.lookupReference('icon'),
             tip = this.lookupReference('tip'),
-            xtype = this.lookupReference('xtype'),
             notes = this.lookupReference('notes');
 
         Ext.Ajax.request({
@@ -54,22 +58,30 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
 
         function setData(data) {
 
-            mod.set('optionId', id);
+            mod.set('suboptionId', id);
 
-            mod.set('opt_key', data.key);
-            mod.set('opt_name', data.name);
-            mod.set('opt_description', data.description);
-            mod.set('opt_icon', data.icon);
-            mod.set('opt_tip', data.tip);
-            mod.set('opt_xtype', data.xtype);
-            mod.set('opt_notes', data.notes);
+            mod.set('sub_key', data.key);
+            mod.set('sub_name', data.name);
+            mod.set('sub_description', data.description);
+            mod.set('sub_type', data.xtype);
+            mod.set('sub_xtype', data.xtype);
+            mod.set('sub_titleform', data.titleform);
+            mod.set('sub_table', data.table);
+            mod.set('sub_related', data.related);
+            mod.set('sub_icon', data.icon);
+            mod.set('sub_tip', data.tip);
+            mod.set('sub_notes', data.notes);
 
             key.setValue(data.key);
             name.setValue(data.name);
             description.setValue(data.description);
+            type.setValue(data.type);
+            xtype.setValue(data.xtype);
+            titleform.setValue(data.titleform);
+            table.setValue(data.table);
+            related.setValue(data.related);
             icon.setValue(data.icon);
             tip.setValue(data.tip);
-            xtype.setValue(data.xtype);
             notes.setValue(data.notes);
         }
     },
@@ -79,25 +91,37 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             key = this.lookupReference('key'),
             name = this.lookupReference('name'),
             description = this.lookupReference('description'),
+            type = this.lookupReference('type'),
+            xtype = this.lookupReference('xtype'),
+            titleform = this.lookupReference('titleform'),
+            table = this.lookupReference('table'),
+            related = this.lookupReference('related'),
             icon = this.lookupReference('icon'),
             tip = this.lookupReference('tip'),
-            xtype = this.lookupReference('xtype'),
             notes = this.lookupReference('notes');
 
-        mod.set('opt_key', null);
-        mod.set('opt_name', null);
-        mod.set('opt_description', null);
-        mod.set('opt_icon', null);
-        mod.set('opt_tip', null);
-        mod.set('opt_xtype', null);
-        mod.set('opt_notes', null);
+        mod.set('sub_key', null);
+        mod.set('sub_name', null);
+        mod.set('sub_description', null);
+        mod.set('sub_type', null);
+        mod.set('sub_xtype', null);
+        mod.set('sub_titleform', null);
+        mod.set('sub_table', null);
+        mod.set('sub_related', null);
+        mod.set('sub_icon', null);
+        mod.set('sub_tip', null);
+        mod.set('sub_notes', null);
             
         key.reset();
         name.reset();
         description.reset();
+        type.reset();
+        xtype.reset();
+        titleform.reset();
+        table.reset();
+        related.reset();
         icon.reset();
         tip.reset();
-        xtype.reset();
         notes.reset();
     },
 
@@ -112,18 +136,26 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             key = this.lookupReference('key'),
             name = this.lookupReference('name'),
             description = this.lookupReference('description'),
+            type = this.lookupReference('type'),
+            xtype = this.lookupReference('xtype'),
+            titleform = this.lookupReference('titleform'),
+            table = this.lookupReference('table'),
+            related = this.lookupReference('related'),
             icon = this.lookupReference('icon'),
             tip = this.lookupReference('tip'),
-            xtype = this.lookupReference('xtype'),
             notes = this.lookupReference('notes');
         
-        key.setValue(mod.get('opt_key'));
-        name.setValue(mod.get('opt_name'));
-        description.setValue(mod.get('opt_description'));
-        icon.setValue(mod.get('opt_icon'));
-        tip.setValue(mod.get('opt_tip'));
-        xtype.setValue(mod.get('opt_xtype'));
-        notes.setValue(mod.get('opt_notes'));
+        key.setValue(mod.get('sub_key'));
+        name.setValue(mod.get('sub_name'));
+        description.setValue(mod.get('sub_description'));
+        type.setValue(mod.get('sub_type'));
+        xtype.setValue(mod.get('sub_xtype'));
+        titleform.setValue(mod.get('sub_titleform'));
+        table.setValue(mod.get('sub_table'));
+        related.setValue(mod.get('sub_related'));
+        icon.setValue(mod.get('sub_icon'));
+        tip.setValue(mod.get('sub_tip'));
+        notes.setValue(mod.get('sub_notes'));
             
         mod.set('editing', false);
     },
@@ -131,68 +163,105 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
     onSave: function() {
         const mod = this.getViewModel(),
             me = this,
+            view = this.getView(),
+            form = view.down('form'),
             key = this.lookupReference('key').getValue(),
             name = this.lookupReference('name').getValue(),
+            type = this.lookupReference('type').getValue(),
+            xtype = this.lookupReference('xtype').getValue(),
+            titleform = this.lookupReference('titleform').getValue(),
+            table = this.lookupReference('table').getValue(),
+            related = this.lookupReference('related').getValue(),
             description = this.lookupReference('description').getValue(),
             icon = this.lookupReference('icon').getValue(),
             tip = this.lookupReference('tip').getValue(),
-            xtype = this.lookupReference('xtype').getValue(),
             notes = this.lookupReference('notes').getValue();
         
-        Ext.Ajax.request({
-            url: Session.getScriptsPath('option', 'setopt'),
+        if( form.isValid() ) {
 
-            params: {
-                IhQYw45L6i: Session.getId(),
-                optionid: mod.get('optionId'),
-                ke: key,
-                na: name,
-                de: description,
-                xt: xtype,
-                ic: icon,
-                ti: tip,
-                no: notes
-            },
-        
-            success: function(response, opts) {
-                var obj = Ext.decode(response.responseText);
-        
-                if(obj.error === 0) {
-                    setData(obj.data);
-                }
-                else {
-                    if( obj.success ) {
-                        Ext.Msg.alert('Error', 'Error');
+            Ext.Ajax.request({
+                url: Session.getScriptsPath('suboption', 'setsub'),
+
+                params: {
+                    IhQYw45L6i: Session.getId(),
+                    suboptionid: mod.get('suboptionId'),
+                    ke: key,
+                    na: name,
+                    ty: type,
+                    xt: xtype,
+                    tf: titleform,
+                    tb: table,
+                    rl: related,
+                    de: description,
+                    ic: icon,
+                    ti: tip,
+                    no: notes
+                },
+            
+                success: function(response, opts) {
+                    var obj = Ext.decode(response.responseText);
+            
+                    if(obj.error === 0) {
+                        setData(obj.data);
                     }
                     else {
-                        Ext.Msg.alert('Error', 'Error');
+                        if( obj.success ) {
+                            Ext.Msg.alert('Error', 'Error');
+                        }
+                        else {
+                            Ext.Msg.alert('Error', 'Error');
+                        }
                     }
-                }
-            },
-        
-            failure: function(response, opts) {
-                Ext.Msg.alert('Error', 'Error');
-            },
-        
-            scope: this
-        });
+                },
+            
+                failure: function(response, opts) {
+                    Ext.Msg.alert('Error', 'Error');
+                },
+            
+                scope: this
+            });
 
-        mod.set('editing', false);
+            mod.set('editing', false);
+        }
 
         function setData(data) {
             const info = {
                 name: name
             };
 
-            mod.set('opt_key', key);
-            mod.set('opt_name', name);
-            mod.set('opt_description', description);
-            mod.set('opt_icon', icon);
-            mod.set('opt_tip', tip);
-            mod.set('opt_xtype', xtype);
-            mod.set('opt_notes', notes);
+            mod.set('sub_key', key);
+            mod.set('sub_name', name);
+            mod.set('sub_description', description);
+            mod.set('sub_type', type);
+            mod.set('sub_xtype', xtype);
+            mod.set('sub_titleform', titleform);
+            mod.set('sub_table', table);
+            mod.set('sub_related', related);
+            mod.set('sub_icon', icon);
+            mod.set('sub_tip', tip);
+            mod.set('sub_notes', notes);
             
             me.fireEvent('optiondatachanged', info);
+        }
+    },
+
+    onChangeType(cbo, val) {
+        const xtype = this.lookupReference('xtype'),
+            titleform = this.lookupReference('titleform'),
+            table = this.lookupReference('table'),
+            related = this.lookupReference('related');
+
+        if( val != 'x') {
+            xtype.reset();
+
+            if( val == 'd') {
+                related.reset();
+            }
+        }
+        else {
+            titleform.reset();
+            table.reset();
+            related.reset();
         }
     }
 });

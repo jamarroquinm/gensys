@@ -139,6 +139,8 @@ Ext.define('App.view.main.operation.solutions.14-option.OptionController', {
     onSave() {
         const mod = this.getViewModel(),
             me = this,
+            view = this.getView(),
+            form = view.down('form'),
             key = this.lookupReference('key').getValue(),
             name = this.lookupReference('name').getValue(),
             description = this.lookupReference('description').getValue(),
@@ -148,41 +150,44 @@ Ext.define('App.view.main.operation.solutions.14-option.OptionController', {
             tip = this.lookupReference('tip').getValue(),
             notes = this.lookupReference('notes').getValue();
         
-        Ext.Ajax.request({
-            url: Session.getScriptsPath('option', 'setopt'),
+        if( form.isValid() ) {
+        
+            Ext.Ajax.request({
+                url: Session.getScriptsPath('option', 'setopt'),
 
-            params: {
-                IhQYw45L6i: Session.getId(),
-                optionid: mod.get('optionId'),
-                ke: key,
-                na: name,
-                de: description,
-                xt: xtype,
-                ty: type,
-                ic: icon,
-                ti: tip,
-                no: notes
-            },
-        
-            success: function(response, opts) {
-                var obj = Ext.decode(response.responseText);
-        
-                if(obj.error === 0) {
-                    setData(obj.data);
-                }
-                else {
+                params: {
+                    IhQYw45L6i: Session.getId(),
+                    optionid: mod.get('optionId'),
+                    ke: key,
+                    na: name,
+                    de: description,
+                    xt: xtype,
+                    ty: type,
+                    ic: icon,
+                    ti: tip,
+                    no: notes
+                },
+            
+                success: function(response, opts) {
+                    var obj = Ext.decode(response.responseText);
+            
+                    if(obj.error === 0) {
+                        setData(obj.data);
+                    }
+                    else {
+                        Ext.Msg.alert('Error', 'Error');
+                    }
+                },
+            
+                failure: function(response, opts) {
                     Ext.Msg.alert('Error', 'Error');
-                }
-            },
-        
-            failure: function(response, opts) {
-                Ext.Msg.alert('Error', 'Error');
-            },
-        
-            scope: this
-        });
+                },
+            
+                scope: this
+            });
 
-        mod.set('editing', false);
+            mod.set('editing', false);
+        }
 
         function setData(data) {
             const info = {

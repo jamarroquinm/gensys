@@ -124,6 +124,8 @@ Ext.define('App.view.main.operation.solutions.13-menu.MenuController', {
     onSave: function() {
         const mod = this.getViewModel(),
             me = this,
+            view = this.getView(),
+            form = view.down('form'),
             key = this.lookupReference('key').getValue(),
             name = this.lookupReference('name').getValue(),
             description = this.lookupReference('description').getValue(),
@@ -131,45 +133,48 @@ Ext.define('App.view.main.operation.solutions.13-menu.MenuController', {
             tip = this.lookupReference('tip').getValue(),
             notes = this.lookupReference('notes').getValue();
         
-        Ext.Ajax.request({
-            url: Session.getScriptsPath('menu', 'setmen'),
+        if( form.isValid() ) {
         
-            params: {
-                IhQYw45L6i: Session.getId(),
-                menuid: mod.get('menuId'),
-                ke: key,
-                na: name,
-                de: description,
-                ic: icon,
-                ti: tip,
-                no: notes
-            },
-        
-            success: function(response, opts) {
-                var obj = Ext.decode(response.responseText);
-        
-                if(obj.error === 0) {
-                    setData(obj.data);
-                }
-                else {
-                    if( obj.success ) {
-                        Ext.Msg.alert('Error', 'Error');
+            Ext.Ajax.request({
+                url: Session.getScriptsPath('menu', 'setmen'),
+            
+                params: {
+                    IhQYw45L6i: Session.getId(),
+                    menuid: mod.get('menuId'),
+                    ke: key,
+                    na: name,
+                    de: description,
+                    ic: icon,
+                    ti: tip,
+                    no: notes
+                },
+            
+                success: function(response, opts) {
+                    var obj = Ext.decode(response.responseText);
+            
+                    if(obj.error === 0) {
+                        setData(obj.data);
                     }
                     else {
-                        Ext.Msg.alert('Error', 'Error');
+                        if( obj.success ) {
+                            Ext.Msg.alert('Error', 'Error');
+                        }
+                        else {
+                            Ext.Msg.alert('Error', 'Error');
+                        }
                     }
-                }
-            },
-        
-            failure: function(response, opts) {
-                Ext.Msg.alert('Error', 'Error');
-            },
-        
-            scope: this
-        });
+                },
+            
+                failure: function(response, opts) {
+                    Ext.Msg.alert('Error', 'Error');
+                },
+            
+                scope: this
+            });
 
-        mod.set('editing', false);
-
+            mod.set('editing', false);
+        }
+        
         function setData(data) {
             const info = {
                 name: name

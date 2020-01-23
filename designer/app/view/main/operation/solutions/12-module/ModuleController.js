@@ -156,6 +156,8 @@ Ext.define('App.view.main.operation.solutions.12-module.ModuleController', {
     onSave() {
         const mod = this.getViewModel(),
             me = this,
+            view = this.getView(),
+            form = view.down('form'),
             key = this.lookupReference('key').getValue(),
             name = this.lookupReference('name').getValue(),
             description = this.lookupReference('description').getValue(),
@@ -167,48 +169,52 @@ Ext.define('App.view.main.operation.solutions.12-module.ModuleController', {
             changeScript = this.lookupReference('changeScript').getValue(),
             notes = this.lookupReference('notes').getValue();
         
-        Ext.Ajax.request({
-            url: Session.getScriptsPath('module', 'setmod'),
+        if( form.isValid() ) {
+        
+            Ext.Ajax.request({
+                url: Session.getScriptsPath('module', 'setmod'),
 
-            params: {
-                IhQYw45L6i: Session.getId(),
-                modeuleid: mod.get('moduleId'),
-                ke: key,
-                na: name,
-                de: description,
-                ty: type,
-                af: apiFolder,
-                cf: contentFolder,
-                ls: loginScript,
-                us: unlockScript,
-                cs: changeScript,
-                no: notes                
-            },
-        
-            success: function(response, opts) {
-                var obj = Ext.decode(response.responseText);
-        
-                if(obj.error === 0) {
-                    setData(obj.data);
-                }
-                else {
-                    if( obj.success ) {
-                        Ext.Msg.alert('Error', 'Error');
+                params: {
+                    IhQYw45L6i: Session.getId(),
+                    modeuleid: mod.get('moduleId'),
+                    ke: key,
+                    na: name,
+                    de: description,
+                    ty: type,
+                    af: apiFolder,
+                    cf: contentFolder,
+                    ls: loginScript,
+                    us: unlockScript,
+                    cs: changeScript,
+                    no: notes                
+                },
+            
+                success: function(response, opts) {
+                    var obj = Ext.decode(response.responseText);
+            
+                    if(obj.error === 0) {
+                        setData(obj.data);
                     }
                     else {
-                        Ext.Msg.alert('Error', 'Error');
+                        if( obj.success ) {
+                            Ext.Msg.alert('Error', 'Error');
+                        }
+                        else {
+                            Ext.Msg.alert('Error', 'Error');
+                        }
                     }
-                }
-            },
-        
-            failure: function(response, opts) {
-                Ext.Msg.alert('Error', 'Error');
-            },
-        
-            scope: this
-        });
+                },
+            
+                failure: function(response, opts) {
+                    Ext.Msg.alert('Error', 'Error');
+                },
+            
+                scope: this
+            });
 
-        mod.set('editing', false);
+            mod.set('editing', false);
+
+        }
 
         function setData(data) {
             const info = {

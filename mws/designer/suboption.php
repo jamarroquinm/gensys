@@ -42,14 +42,17 @@ if( $session["ok"]) {
         $key = getCharValueOf('ke');
         $name = getCharValueOf('na');
         $description = getCharValueOf('de');
-        $xtype = getCharValueOf('xt');
         $type = getCharValueOf('ty');
+        $xtype = getCharValueOf('xt');
+        $titleform = getCharValueOf('tf');
+        $table = getCharValueOf('tb');
+        $related = getCharValueOf('rl');
         $icon = getCharValueOf('ic');
         $tip = getCharValueOf('ti');
         $notes = getCharValueOf('no'); 
         
-        if( $optionId ) {
-            $data = setSubOptionData($suboptionId, $key, $name, $description, $xtype, $icon, $tip, $notes);
+        if( $suboptionId ) {
+            $data = setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype, $titleform, $table, $related, $icon, $tip, $notes);
         }
         else {
             setError(3001, 'Impossible to execute');
@@ -94,10 +97,10 @@ function getSubOptionData($id) {
                 icon,
                 tip,
                 notes,
-                xtype,
+                type,
                 titleform,
-                dataform,
-                store
+                `table`,
+                related
             From
                 `suboption`
             Where
@@ -110,13 +113,17 @@ function getSubOptionData($id) {
 
 }
 
-function setSubOptionData($optionId, $key, $name, $description, $xtype, $icon, $tip, $notes) {
+function setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype, $titleform, $table, $related, $icon, $tip, $notes) {
 
     $sql = "Update `suboption` set
                 `key` = ?,
                 `name` = ?,
                 `description` = ?,
+                `type` = ?,
                 `xtype` = ?,
+                `titleform` = ?,
+                `table` = ?,
+                `related` = ?,
                 `icon` = ?,
                 `tip` = ?,
                 `notes` = ?
@@ -126,11 +133,15 @@ function setSubOptionData($optionId, $key, $name, $description, $xtype, $icon, $
     $args = array($key,
         $name,
         $description,
+        $type,
         $xtype,
+        $titleform, 
+        $table, 
+        $related, 
         $icon,
         $tip,
         $notes,
-        $optionId
+        $suboptionId
     );
     
     execute($sql, $args, true);

@@ -133,6 +133,33 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOption',{
                     }
                 },
                 {
+                    xtype: 'combobox',
+                    anchor: '100%',
+                    name: 'type',
+                    
+                    reference: 'type',
+                    publishes: 'value',
+
+                    fieldLabel: 'Type',
+                    editable: false,
+                    forceSelection: true,
+                    
+                    store: [
+                        [ 'x', 'Component'],
+                        [ 'd', 'Dictionary Crud'],
+                        [ 'c', 'Categorized dictionary Crud']
+                    ],
+                    queryMode: 'local',
+
+                    bind: {
+                        disabled: '{!editing}'
+                    },
+
+                    listeners: {
+                        change: 'onChangeType'
+                    }
+                },
+                {
                     xtype: 'textfield',
                     fieldLabel: 'xType',
                     anchor: '100%',
@@ -144,7 +171,51 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOption',{
                     regex: /^[^<>;&'`]+$/,
                     regexText: 'Invalid',
                     bind: {
-                        disabled: '{!editing}'
+                        disabled: '{!xtypeEditable}'
+                    }
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'Form title',
+                    anchor: '100%',
+                    name: 'titleform',
+                    reference: 'titleform',
+                    allowBlank: false,
+                    allowOnlyWhitespace: false,
+                    maxLength: 60,
+                    regex: /^[^<>;&'`]+$/,
+                    regexText: 'Invalid',
+                    bind: {
+                        disabled: '{!formEditable}'
+                    }
+                },                {
+                    xtype: 'textfield',
+                    fieldLabel: 'Main table',
+                    anchor: '100%',
+                    name: 'table',
+                    reference: 'table',
+                    allowBlank: false,
+                    allowOnlyWhitespace: false,
+                    maxLength: 30,
+                    regex: /^[^<>;&'`]+$/,
+                    regexText: 'Invalid',
+                    bind: {
+                        disabled: '{!formEditable}'
+                    }
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'Related table',
+                    anchor: '100%',
+                    name: 'related',
+                    reference: 'related',
+                    allowBlank: false,
+                    allowOnlyWhitespace: false,
+                    maxLength: 30,
+                    regex: /^[^<>;&'`]+$/,
+                    regexText: 'Invalid',
+                    bind: {
+                        disabled: '{!relatedEditable}'
                     }
                 },
                 {

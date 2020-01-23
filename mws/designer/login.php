@@ -144,7 +144,7 @@ function getMenu($accesskey, $userId) {
 
 	//Subsubmenu options
 	$sql = "Select 
-				id, `key` as 'option', name as text, tip, icon, type, xtype, titleform as title, dataform as form, store, optionId
+				id, `key` as 'option', name as text, tip, icon, type, xtype, titleform, `table`, related, optionId
 			From 
 				suboption
 			Where 

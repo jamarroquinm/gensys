@@ -4,7 +4,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 
 DROP SCHEMA IF EXISTS `gensys` ;
-CREATE SCHEMA IF NOT EXISTS `gensys` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `gensys` DEFAULT CHARACTER SET utf8mb4 ;
 USE `gensys` ;
 
 
@@ -242,8 +242,8 @@ CREATE  TABLE IF NOT EXISTS `gensys`.`suboption` (
   `xtype` VARCHAR(60), 
 
   `titleform` VARCHAR(50), 
-  `dataform` VARCHAR(30), 
-  `store` VARCHAR(30), 
+  `table` VARCHAR(30), 
+  `related` VARCHAR(30), 
 
   `order` TINYINT NOT NULL DEFAULT 0,
 
@@ -457,7 +457,7 @@ Insert into `option` (menuId, `key`, name, tip, icon, type, xtype, description )
     (3, 'traduccion', 'Traducción', 'Traducción', 'language', 't', null, 'Traducción'),
     (4, 'config', 'Configuración', 'Configuración', 'cog', 'x', null, 'Configuración');
 
-Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description, titleform, store, tableId ) values 
+Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description, titleform, related, tableId ) values 
     (2, 'accesos', 'Accesos', 'Control de acesos', 'user-lock', 'x', null, 'Control de acesos', 'Control de acesos', null, 6),
     (3, 'solucion', 'Soluciones', 'Soluciones', 'drafting-compass', 'x', 'operation-solutions-solutions', 'Soluciones', 'Soluciones', null, 1),
     (4, 'centralbase', 'Base Central', 'Base de Datos Central', 'database', 'x', null, 'Base de Datos Central', 'Base de Datos Central', null, 2),
@@ -500,9 +500,9 @@ Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, descript
     (11, 'concluido', 'Concluídos', 'Solicitudes concluídas', 'folder-open', 'x', null, 'Solicitudes concluídas'),
     (11, 'cerrado', 'Cerrados', 'Solicitudes cerradas', 'folder', 'x', null, 'Solicitudes cerradas');
 
-Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description, titleform, store, tableId ) values 
+Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description, titleform, related, tableId ) values 
     (12, 'reportes', 'Tipos', 'Tipos de reportes de fallas', 'file', 'x', null, 'Tipos de reportes de fallas', null, null, null),
-    (12, 'categorias', 'Categorías', 'Categorías de reportes de fallas', 'file-alt', 'c', null, 'Categorías de reportes de fallas', 'Categoría de reporte de fallas', 'categorias-reportes', 1);
+    (12, 'categorias', 'Categorías', 'Categorías de reportes de fallas', 'file-alt', 'c', null, 'Categorías de reportes de fallas', 'Categoría de reporte de fallas', null, null);
 
 
 
