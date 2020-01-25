@@ -7,7 +7,7 @@ Ext.define('Gsys.desktop.crud.form.Dictionay', {
 		'Gsys.desktop.crud.form.ActiveField'
 	],
 
-	width: 420,
+	width: 450,
 	bodyPadding: 10,
 
 	items: [

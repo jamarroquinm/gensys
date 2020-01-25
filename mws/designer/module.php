@@ -114,7 +114,7 @@ function getModuleData($id) {
             Where
                 id = ?";
     $args = array($id);
-    $module = get($sql, $args, true);
+    $module = get($sql, $args);
 
     setError(0);
     return $module;
@@ -150,7 +150,7 @@ function setModuleData($moduleId, $key, $name, $description, $type, $apiFolder, 
         $moduleId
     );
     
-    execute($sql, $args, true);
+    execute($sql, $args);
 
     $sql = "Select
                 if( type = 'm', 'x-fas fa-mobile-alt', 'x-fas fa-desktop' ) as iconCls
@@ -159,7 +159,7 @@ function setModuleData($moduleId, $key, $name, $description, $type, $apiFolder, 
             Where
                 id = ?";
     $args = array($moduleId);
-    $module = get($sql, $args, true);
+    $module = get($sql, $args);
 
     setError(0);
 

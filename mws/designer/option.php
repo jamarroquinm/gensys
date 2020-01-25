@@ -97,7 +97,7 @@ function getOptionData($id) {
             Where
                 id = ?";
     $args = array($id);
-    $option = get($sql, $args, true);
+    $option = get($sql, $args);
 
     setError(0);
     return $option;
@@ -129,7 +129,7 @@ function setOptionData($optionId, $key, $name, $description, $xtype, $type, $ico
         $optionId
     );
     
-    execute($sql, $args, true);
+    execute($sql, $args);
     setError(0);
 
     return true;

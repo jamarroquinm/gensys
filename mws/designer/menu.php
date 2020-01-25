@@ -101,7 +101,7 @@ function getMenuData($id) {
             Where
                 id = ?";
     $args = array($id);
-    $menu = get($sql, $args, true);
+    $menu = get($sql, $args);
 
     setError(0);
     return $menu;
@@ -129,7 +129,7 @@ function setMenuData($menuId, $key, $name, $description, $icon, $tip, $notes) {
         $menuId
     );
     
-    execute($sql, $args, true);
+    execute($sql, $args);
     setError(0);
 
     return true;

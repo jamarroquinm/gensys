@@ -18,7 +18,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             description = this.lookupReference('description'),
             type = this.lookupReference('type'),
             xtype = this.lookupReference('xtype'),
-            titleform = this.lookupReference('titleform'),
+            formTitle = this.lookupReference('formTitle'),
+            gridTitle = this.lookupReference('gridTitle'),
             table = this.lookupReference('table'),
             related = this.lookupReference('related'),
             icon = this.lookupReference('icon'),
@@ -65,7 +66,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             mod.set('sub_description', data.description);
             mod.set('sub_type', data.xtype);
             mod.set('sub_xtype', data.xtype);
-            mod.set('sub_titleform', data.titleform);
+            mod.set('sub_formTitle', data.formTitle);
+            mod.set('sub_gridTitle', data.gridTitle);
             mod.set('sub_table', data.table);
             mod.set('sub_related', data.related);
             mod.set('sub_icon', data.icon);
@@ -77,7 +79,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             description.setValue(data.description);
             type.setValue(data.type);
             xtype.setValue(data.xtype);
-            titleform.setValue(data.titleform);
+            formTitle.setValue(data.formTitle);
+            gridTitle.setValue(data.gridTitle);
             table.setValue(data.table);
             related.setValue(data.related);
             icon.setValue(data.icon);
@@ -93,7 +96,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             description = this.lookupReference('description'),
             type = this.lookupReference('type'),
             xtype = this.lookupReference('xtype'),
-            titleform = this.lookupReference('titleform'),
+            formTitle = this.lookupReference('formTitle'),
+            gridTitle = this.lookupReference('gridTitle'),
             table = this.lookupReference('table'),
             related = this.lookupReference('related'),
             icon = this.lookupReference('icon'),
@@ -105,7 +109,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
         mod.set('sub_description', null);
         mod.set('sub_type', null);
         mod.set('sub_xtype', null);
-        mod.set('sub_titleform', null);
+        mod.set('sub_formTitle', null);
+        mod.set('sub_gridTitle', null);
         mod.set('sub_table', null);
         mod.set('sub_related', null);
         mod.set('sub_icon', null);
@@ -117,7 +122,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
         description.reset();
         type.reset();
         xtype.reset();
-        titleform.reset();
+        formTitle.reset();
+        gridTitle.reset();
         table.reset();
         related.reset();
         icon.reset();
@@ -138,7 +144,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             description = this.lookupReference('description'),
             type = this.lookupReference('type'),
             xtype = this.lookupReference('xtype'),
-            titleform = this.lookupReference('titleform'),
+            formTitle = this.lookupReference('formTitle'),
+            gridTitle = this.lookupReference('gridTitle'),
             table = this.lookupReference('table'),
             related = this.lookupReference('related'),
             icon = this.lookupReference('icon'),
@@ -150,7 +157,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
         description.setValue(mod.get('sub_description'));
         type.setValue(mod.get('sub_type'));
         xtype.setValue(mod.get('sub_xtype'));
-        titleform.setValue(mod.get('sub_titleform'));
+        formTitle.setValue(mod.get('sub_formTitle'));
+        gridTitle.setValue(mod.get('sub_gridTitle'));
         table.setValue(mod.get('sub_table'));
         related.setValue(mod.get('sub_related'));
         icon.setValue(mod.get('sub_icon'));
@@ -169,7 +177,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             name = this.lookupReference('name').getValue(),
             type = this.lookupReference('type').getValue(),
             xtype = this.lookupReference('xtype').getValue(),
-            titleform = this.lookupReference('titleform').getValue(),
+            formTitle = this.lookupReference('formTitle').getValue(),
+            gridTitle = this.lookupReference('gridTitle').getValue(),
             table = this.lookupReference('table').getValue(),
             related = this.lookupReference('related').getValue(),
             description = this.lookupReference('description').getValue(),
@@ -189,7 +198,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
                     na: name,
                     ty: type,
                     xt: xtype,
-                    tf: titleform,
+                    ft: formTitle,
+                    gt: gridTitle,
                     tb: table,
                     rl: related,
                     de: description,
@@ -234,7 +244,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             mod.set('sub_description', description);
             mod.set('sub_type', type);
             mod.set('sub_xtype', xtype);
-            mod.set('sub_titleform', titleform);
+            mod.set('sub_formTitle', formTitle);
+            mod.set('sub_gridTitle', gridTitle);
             mod.set('sub_table', table);
             mod.set('sub_related', related);
             mod.set('sub_icon', icon);
@@ -247,7 +258,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
 
     onChangeType(cbo, val) {
         const xtype = this.lookupReference('xtype'),
-            titleform = this.lookupReference('titleform'),
+            formTitle = this.lookupReference('formTitle'),
+            gridTitle = this.lookupReference('gridTitle'),
             table = this.lookupReference('table'),
             related = this.lookupReference('related');
 
@@ -259,7 +271,8 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOptionController',
             }
         }
         else {
-            titleform.reset();
+            formTitle.reset();
+            gridTitle.reset();
             table.reset();
             related.reset();
         }

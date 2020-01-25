@@ -178,17 +178,33 @@ Ext.define('App.view.main.operation.solutions.15-suboption.SubOption',{
                     xtype: 'textfield',
                     fieldLabel: 'Form title',
                     anchor: '100%',
-                    name: 'titleform',
-                    reference: 'titleform',
+                    name: 'formTitle',
+                    reference: 'formTitle',
                     allowBlank: false,
                     allowOnlyWhitespace: false,
-                    maxLength: 60,
+                    maxLength: 40,
                     regex: /^[^<>;&'`]+$/,
                     regexText: 'Invalid',
                     bind: {
                         disabled: '{!formEditable}'
                     }
-                },                {
+                },
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'Grid title',
+                    anchor: '100%',
+                    name: 'gridTitle',
+                    reference: 'gridTitle',
+                    allowBlank: false,
+                    allowOnlyWhitespace: false,
+                    maxLength: 40,
+                    regex: /^[^<>;&'`]+$/,
+                    regexText: 'Invalid',
+                    bind: {
+                        disabled: '{!formEditable}'
+                    }
+                },
+                {
                     xtype: 'textfield',
                     fieldLabel: 'Main table',
                     anchor: '100%',

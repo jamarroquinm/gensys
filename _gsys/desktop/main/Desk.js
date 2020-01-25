@@ -85,7 +85,7 @@ Ext.define('Gsys.desktop.main.Desk', {
                                 itemId: areaId
                             });
                         }
-                        else if( subop.type == 't' ) {
+                        else if( subop.type == 's' ) {
 
                             area = Ext.create({
                                 xtype: 'tabdesk',
@@ -96,8 +96,10 @@ Ext.define('Gsys.desktop.main.Desk', {
 
                                 tab = Ext.create({
                                     xtype: 'panel',
+
                                     title: ssubop.text,
                                     padding: 5,
+                                    layout: 'fit',
 
                                     tabConfig: {
                                         height: 45,
@@ -110,71 +112,19 @@ Ext.define('Gsys.desktop.main.Desk', {
                                 });
 
                                 if( ssubop.type == 'x' && ssubop.xtype ) {
-                                    tab.setLayout('fit');
                                     tab.add({xtype: ssubop.xtype});
                                 }
                                 else if( ssubop.type == 'd') {
-                                    tab.setLayout({
-                                        type: 'vbox',
-                                        align: 'stretch'
+                                    var dic = Ext.create('Gsys.desktop.main.DeskDictionary', {
+                                        tableId: ssubop.id,
+                                        formTitle: ssubop.formTitle,
+                                        gridTitle: ssubop.gridTitle
                                     });
 
-                                    var bar = Ext.create({
-                                        xtype: 'container',
-                            
-                                        border: 1,
-                                        padding: 5,
+                                    tab.add(dic);
 
-                                        style: {
-                                            borderColor: '#DCDCDC',
-                                            borderStyle: 'solid'
-                                        },
-                            
-                                        layout: {
-                                            type: 'hbox',
-                                            align: 'middle'
-                                        },
-                            
-                                        items: [
-                                            {
-                                                xtype: 'crudbar',
-                                                form: 'dictionayform',
-                                                type: 'grid',
-                                                validationUrl: me.getBasePath() + 'standard/dictionary',
-                                                formTitle: ssubop.title,
-                                                tableId: ssubop.tableId
-                                            }
-                                        ]
-                                    });
-
-                                    var grid = Ext.create('Gsys.desktop.crud.grid.Dictionaries', {
-                                        title: ssubop.title,
-                                        store: ssubop.store,
-                                        itemId: 'table'
-                                    });
-
-                                    tab.add([bar, grid]);
-
-                                    //Preparamos el store del diccinario para que apunte de forma automática al script
-                                    if(ssubop.store) {
-                                        if( me.getBasePath() ) {
-                                            var store = Ext.getStore(ssubop.store),
-                                                proxy = store.getProxy(),
-                                                path = me.getBasePath() + 'standard/dictionary.php?'
-                                                api = {
-                                                    create  : path + 'operation=add',
-                                                    read    : path + 'operation=read',
-                                                    update  : path + 'operation=update',
-                                                    destroy : path + 'operation=del'
-                                                };
-
-                                            proxy.setApi(api);
-                                            proxy.setExtraParam('zid', ssubop.tableId);
-                                        }
-                                        else {
-                                            console.log('The script base path is not defined yet');
-                                        }
-                                    }
+                                }
+                                else if( ssubop.type == 'c') {
                                 }
                                 else {
                                     tab.add({

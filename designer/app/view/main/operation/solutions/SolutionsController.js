@@ -408,5 +408,67 @@ Ext.define('App.view.main.operation.solutions.SolutionsController', {
         else {
             throw new Error('Unable to find the node');
         }
+    },
+
+
+    moveDown() {
+        const mod = this.getViewModel(),
+            store = this.getStore('solution'),
+            nodeType = mod.get('nodeType'),
+            nodeId = mod.get('nodeId'),
+            record = store.getNodeById(nodeId),
+            parent = record.parentNode;
+
+        if( !record.isLast() ) {
+            const next = record.nextSibling;
+            this.moveElement(nodeType, parent, next, record); 
+        }
+    },
+
+    moveUp() {
+        const mod = this.getViewModel(),
+            store = this.getStore('solution'),
+            nodeType = mod.get('nodeType'),
+            nodeId = mod.get('nodeId'),
+            record = store.getNodeById(nodeId),
+            parent = record.parentNode;
+
+        if( !record.isFirst() ) {
+            const prev = record.previousSibling;
+            this.moveElement(nodeType, parent, record, prev);     
+        }
+    },
+
+    moveElement(type, parent, first, second) {
+        const firstId = first.get('internalId'),
+            secondId = second.get('internalId');
+
+        Ext.Ajax.request({
+            url: Session.getScriptsPath('solution', 'swap'),
+        
+            params: {
+                'IhQYw45L6i': Session.getId(),
+                type: type,
+                fid: firstId,
+                sid: secondId
+            },
+        
+            success: function(response, opts) {
+                var obj = Ext.decode(response.responseText);
+        
+                if(obj.error === 0) {
+                    parent.insertBefore(first, second);
+                }
+                else {
+                    Ext.Msg.alert('Error', obj.info);
+                }
+            },
+        
+            failure: function(response, opts) {
+                Ext.Msg.alert('Error', 'Error');
+            },
+
+            scope: this
+        });
     }
 });

@@ -199,7 +199,7 @@ CREATE  TABLE IF NOT EXISTS `gensys`.`option` (
   `menuId` BIGINT UNSIGNED NOT NULL, 
   `key` VARCHAR(15) NOT NULL, 
 
-  `type` CHAR(1) DEFAULT 's',  -- s Submenu | c Container | x Component
+  `type` CHAR(1) DEFAULT 's',  -- s Submenu | x Component
   `name` VARCHAR(30), 
   `tip` VARCHAR(60), 
   `description` VARCHAR(300),
@@ -232,7 +232,7 @@ CREATE  TABLE IF NOT EXISTS `gensys`.`suboption` (
   `tableId` BIGINT UNSIGNED, 
 
   `key` VARCHAR(15) NOT NULL, 
-  `type` CHAR(1) DEFAULT 'x',  -- x Component | d Dictionary crud | c Cat dictionary crud | p Parameters
+  `type` CHAR(1) DEFAULT 'x',  -- x Component | d Dictionary crud | c Cat dictionary crud 
   `name` VARCHAR(60), 
   `tip` VARCHAR(60), 
   `description` VARCHAR(300),
@@ -241,7 +241,8 @@ CREATE  TABLE IF NOT EXISTS `gensys`.`suboption` (
 
   `xtype` VARCHAR(60), 
 
-  `titleform` VARCHAR(50), 
+  `formTitle` VARCHAR(40), 
+  `gridTitle` VARCHAR(40), 
   `table` VARCHAR(30), 
   `related` VARCHAR(30), 
 
@@ -451,21 +452,21 @@ Insert into `menu` (`moduleId`, `key`, `name`, `description`, `icon`, `tip` ) va
 
 Insert into `option` (menuId, `key`, name, tip, icon, type, xtype, description ) values 
     (1, 'indicadores', 'Indicadores', 'Tablero de indicadores', 'chart-line', 'x', null, 'Tablero de indicadores'),
-    (2, 'accesos', 'Accesos', 'Control de acesos', 'user-lock', 't', null, 'Control de acesos'),
-    (3, 'soluciones', 'Soluciones', 'Soluciones', 'drafting-compass', 't', null, 'Soluciones'),
-    (3, 'generacion', 'Generación', 'Generación de código', 'rocket', 't', null, 'Generación de código'),
-    (3, 'traduccion', 'Traducción', 'Traducción', 'language', 't', null, 'Traducción'),
+    (2, 'accesos', 'Accesos', 'Control de acesos', 'user-lock', 's', null, 'Control de acesos'),
+    (3, 'soluciones', 'Soluciones', 'Soluciones', 'drafting-compass', 's', null, 'Soluciones'),
+    (3, 'generacion', 'Generación', 'Generación de código', 'rocket', 's', null, 'Generación de código'),
+    (3, 'traduccion', 'Traducción', 'Traducción', 'language', 's', null, 'Traducción'),
     (4, 'config', 'Configuración', 'Configuración', 'cog', 'x', null, 'Configuración');
 
-Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description, titleform, related, tableId ) values 
-    (2, 'accesos', 'Accesos', 'Control de acesos', 'user-lock', 'x', null, 'Control de acesos', 'Control de acesos', null, 6),
-    (3, 'solucion', 'Soluciones', 'Soluciones', 'drafting-compass', 'x', 'operation-solutions-solutions', 'Soluciones', 'Soluciones', null, 1),
-    (4, 'centralbase', 'Base Central', 'Base de Datos Central', 'database', 'x', null, 'Base de Datos Central', 'Base de Datos Central', null, 2),
-    (4, 'database', 'Base de Datos', 'Base de Datos Operativa', 'database', 'x', null, 'Base de Datos Operativa', 'Base de Datos Operativa', null, 3),
-    (4, 'middleware', 'Middleware', 'Servicios de middleware', 'server', 'x', null, 'Servicios de middleware', 'Servicios de middleware', null, 4),
-    (4, 'webfend', 'Front End', 'Front End Web', 'desktop', 'x', null, 'Front End Web', 'Front End Web', null, 4),
-    (4, 'movilefend', 'Front End', 'Front End Mobile', 'mobile-alt', 'x', null, 'Front End Mobile', 'Front End Mobile', null, 4),
-    (5, 'traduccion', 'Traducción', 'Traducción', 'language', 'x', null, 'Traducción', 'Traducción', null, 6);
+Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description, formTitle, gridTitle ) values 
+    (2, 'accesos', 'Accesos', 'Control de acesos', 'user-lock', 'x', null, 'Control de acesos', 'Control de acesos', 'Control de acesos'),
+    (3, 'solucion', 'Soluciones', 'Soluciones', 'drafting-compass', 'x', 'operation-solutions-solutions', 'Soluciones', 'Soluciones', 'Soluciones'),
+    (4, 'centralbase', 'Base Central', 'Base de Datos Central', 'database', 'x', null, 'Base de Datos Central', 'Base de Datos Central', 'Base de Datos Central'),
+    (4, 'database', 'Base de Datos', 'Base de Datos Operativa', 'database', 'x', null, 'Base de Datos Operativa', 'Base de Datos Operativa', 'Base de Datos Operativa'),
+    (4, 'middleware', 'Middleware', 'Servicios de middleware', 'server', 'x', null, 'Servicios de middleware', 'Servicios de middleware', 'Servicios de middleware'),
+    (4, 'webfend', 'Front End', 'Front End Web', 'desktop', 'x', null, 'Front End Web', 'Front End Web', 'Front End Web'),
+    (4, 'movilefend', 'Front End', 'Front End Mobile', 'mobile-alt', 'x', null, 'Front End Mobile', 'Front End Mobile', 'Front End Mobile'),
+    (5, 'traduccion', 'Traducción', 'Traducción', 'language', 'x', null, 'Traducción', 'Traducción', 'Traducción');
 
 
 
@@ -483,10 +484,10 @@ Insert into `option` (menuId, `key`, name, tip, icon, type, xtype, description )
     (4, 'servicios', 'Servicios', 'Solicitudes de servicio', 'paint-roller', 'x', null, 'Solicitudes de servicio'),
     (4, 'calificaciones', 'Calificaciones', 'Calificaciones de las auditorias', 'chart-line', 'x', null, 'Calificaciones de las auditorias'),
 
-    (5, 'fallas', 'Fallas', 'Reportes de fallas', 'tools', 't', null, 'Reportes de fallas'),
-    (5, 'servicios', 'Servicios', 'Reportes de servicio', 'paint-roller', 't', null, 'Reportes de servicio'),
+    (5, 'fallas', 'Fallas', 'Reportes de fallas', 'tools', 's', null, 'Reportes de fallas'),
+    (5, 'servicios', 'Servicios', 'Reportes de servicio', 'paint-roller', 's', null, 'Reportes de servicio'),
 
-    (6, 'fallas', 'Fallas', 'Reportes de fallas', 'tools', 't', null, 'Reportes de fallas');
+    (6, 'fallas', 'Fallas', 'Reportes de fallas', 'tools', 's', null, 'Reportes de fallas');
 
 
 Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description ) values 
@@ -500,9 +501,9 @@ Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, descript
     (11, 'concluido', 'Concluídos', 'Solicitudes concluídas', 'folder-open', 'x', null, 'Solicitudes concluídas'),
     (11, 'cerrado', 'Cerrados', 'Solicitudes cerradas', 'folder', 'x', null, 'Solicitudes cerradas');
 
-Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description, titleform, related, tableId ) values 
-    (12, 'reportes', 'Tipos', 'Tipos de reportes de fallas', 'file', 'x', null, 'Tipos de reportes de fallas', null, null, null),
-    (12, 'categorias', 'Categorías', 'Categorías de reportes de fallas', 'file-alt', 'c', null, 'Categorías de reportes de fallas', 'Categoría de reporte de fallas', null, null);
+Insert into `suboption` (optionId, `key`, name, tip, icon, type, xtype, description, formTitle, gridTitle) values 
+    (12, 'reportes', 'Tipos', 'Tipos de reportes de fallas', 'file', 'x', null, 'Tipos de reportes de fallas', 'Tipo de reporte', 'Tipos de reportes de fallas'),
+    (12, 'categorias', 'Categorías', 'Categorías de reportes de fallas', 'file-alt', 'c', null, 'Categorías de reportes de fallas', 'Categoría de reporte', 'Categorías de reportes de fallas' );
 
 
 

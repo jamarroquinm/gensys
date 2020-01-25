@@ -183,6 +183,20 @@ if( $session["ok"]) {
             setError(3001, 'Impossible to execute');
         }
     }
+    else if ( $ope == 'swap') {
+
+        $type = getCharValueOf('type');
+        $fid = getIntValueOf('fid');
+        $sid = getIntValueOf('sid');
+
+        if( $type and $fid and $sid ) {
+            $data = performSwap($type, $fid, $sid);
+        }
+        else {
+            setError(3001, 'Impossible to execute');
+        }
+
+    }
     else {
         setError(3000, 'Impossible to proceed');
     }
@@ -411,6 +425,38 @@ function getSuboptionsOfOption($id) {
 
     return $suboptions;
 }
+
+function performSwap($type, $fid, $sid) {
+
+    $tables = array(
+        "n" => "menu",
+        "o" => "option",
+        "s" => "suboption"
+    );
+
+    $table = $tables[$type];
+
+    $sql = "Select `order` from $table where id = ?";
+    $args = array($fid);
+    $first = get($sql, $args);
+
+    $sql = "Select `order` from $table where id = ?";
+    $args = array($sid);
+    $second = get($sql, $args);
+
+    $sql ="Update $table set `order` = ? where id = ?";
+    $args = array($second['order'], $fid);
+    execute($sql, $args);
+
+    $sql ="Update $table set `order` = ? where id = ?";
+    $args = array($first['order'], $sid);
+    execute($sql, $args);
+
+    setError(0);
+
+    return true;
+}
+
 
 
 

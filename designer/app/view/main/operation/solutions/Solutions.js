@@ -169,6 +169,10 @@ Ext.define('App.view.main.operation.solutions.Solutions',{
                                     iconCls: 'x-fas fa-arrow-down',
                                     margin: '0 3 0 0',
 
+                                    listeners: {
+                                        click: 'moveDown'
+                                    },
+
                                     bind: {
                                         disabled: '{!canMove}'
                                     }
@@ -176,6 +180,10 @@ Ext.define('App.view.main.operation.solutions.Solutions',{
                                 {
                                     xtype: 'button',
                                     iconCls: 'x-fas fa-arrow-up',
+
+                                    listeners: {
+                                        click: 'moveUp'
+                                    },
 
                                     bind: {
                                         disabled: '{!canMove}'

@@ -147,8 +147,7 @@ Ext.define('App.view.main.operation.solutions.14-option.Option',{
                     
                     store: [
                         [ 's', 'Submenu'],
-                        [ 'x', 'Component'],
-                        [ 'c', 'Container']
+                        [ 'x', 'Component']
                     ],
                     queryMode: 'local',
 

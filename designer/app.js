@@ -33,6 +33,10 @@ Ext.define('Session', {
 
         getScriptsPath(script, operation) {
             return this.apiBaseFolder + this.apiModuleFolder + script + '.php?operation=' + operation;
+        },
+
+        getDictinoryScriptsPath(operation, tableId) {
+            return this.apiBaseFolder + 'control/dictionary.php?operation=' + operation + '&code=' + tableId;
         }
     }
 });

@@ -44,7 +44,8 @@ if( $session["ok"]) {
         $description = getCharValueOf('de');
         $type = getCharValueOf('ty');
         $xtype = getCharValueOf('xt');
-        $titleform = getCharValueOf('tf');
+        $formTitle = getCharValueOf('ft');
+        $gridTitle = getCharValueOf('gt');
         $table = getCharValueOf('tb');
         $related = getCharValueOf('rl');
         $icon = getCharValueOf('ic');
@@ -52,7 +53,7 @@ if( $session["ok"]) {
         $notes = getCharValueOf('no'); 
         
         if( $suboptionId ) {
-            $data = setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype, $titleform, $table, $related, $icon, $tip, $notes);
+            $data = setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype, $formTitle, $gridTitle, $table, $related, $icon, $tip, $notes);
         }
         else {
             setError(3001, 'Impossible to execute');
@@ -88,7 +89,6 @@ function getSubOptionData($id) {
 
     $sql = "Select
                 id,
-                tableId,
                 type,
                 `key`,
                 name,
@@ -98,7 +98,8 @@ function getSubOptionData($id) {
                 tip,
                 notes,
                 type,
-                titleform,
+                formTitle,
+                gridTitle,
                 `table`,
                 related
             From
@@ -106,14 +107,14 @@ function getSubOptionData($id) {
             Where
                 id = ?";
     $args = array($id);
-    $suboption = get($sql, $args, true);
+    $suboption = get($sql, $args);
 
     setError(0);
     return $suboption;
 
 }
 
-function setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype, $titleform, $table, $related, $icon, $tip, $notes) {
+function setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype, $formTitle, $gridTitle, $table, $related, $icon, $tip, $notes) {
 
     $sql = "Update `suboption` set
                 `key` = ?,
@@ -121,7 +122,8 @@ function setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype
                 `description` = ?,
                 `type` = ?,
                 `xtype` = ?,
-                `titleform` = ?,
+                `formTitle` = ?,
+                `gridTitle` = ?,
                 `table` = ?,
                 `related` = ?,
                 `icon` = ?,
@@ -135,7 +137,8 @@ function setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype
         $description,
         $type,
         $xtype,
-        $titleform, 
+        $formTitle, 
+        $gridTitle, 
         $table, 
         $related, 
         $icon,
@@ -144,7 +147,7 @@ function setSubOptionData($suboptionId, $key, $name, $description, $type, $xtype
         $suboptionId
     );
     
-    execute($sql, $args, true);
+    execute($sql, $args);
     setError(0);
 
     return true;
@@ -157,21 +160,22 @@ function addSubOption($optionId, $name, $key, $description) {
     $id = execute($sql, $args);
 
     $sql = "Select
-                concat('o-', right( concat('00000', id), 5 ) ) as id,
+                concat('s-', right( concat('00000', id), 5 ) ) as id,
                 id as internalId,
                 `key`,
                 name,
                 description,
                 name as text,
-                'x-fas fa-minus' as iconCls
+                1 as leaf,
+                'x-fas fa-ellipsis-v' as iconCls
             From
                 `suboption`
             Where
                 id = ?";
     $args = array($id);
-    $option = get($sql, $args);;
+    $suboption = get($sql, $args);
 
     setError(0);
 
-    return $option;
+    return $suboption;
 }
