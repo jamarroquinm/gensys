@@ -495,30 +495,31 @@ Ext.define('Gsys.controller.Global', {
 
     onCurdToolButtonTap: function(button) {
         var ope = button.ope,
-            tool = button.up('container'),
-            grd = tool.up('container').up('container').down('#table');
+            view = button.up('container').up('container'),
+            grid = view.down('grid'),
+            storeId = view.getStoreId();
 
-        if( ope == 'add' || ope == 'edit' || ope == 'see' ) {
+        if( ope == 'add' || ope == 'edit' ) {
 
-            var sto = grd.getStore().getStoreId(),
-                mdl = grd.getStore().getModel(),
+            var sto = Ext.getStore(storeId),
+                mdl = sto.getModel(),
                 win = Ext.widget('curdwindow'),
-                frm = Ext.widget(tool.getForm()),
-                tit = tool.getFormTitle(),
+                frm = Ext.widget(view.getForm()),
+                tit = view.getFormTitle(),
                 rec;
 
             win.add(frm);
-            win.setStoreName(sto);
-            win.setTipo(tool.getType());
-            win.setValidaEn(tool.getValidationUrl());
-            win.setTitle(tool.getFormTitle());
-            win.setTablaId(tool.getTableId());
+            win.setStoreName(storeId);
+            win.setTipo(view.getType());
+            win.setValidaEn(view.getValidationUrl());
+            win.setTitle(view.getFormTitle());
+            win.setTablaId(view.getTableId());
 
-            rec = grd.selection;
+            rec = grid.selection;
 
             if ( ope == 'add' ) {
 
-                if( tool.getType() == 'tree' ) {
+                if( view.getType() == 'tree' ) {
                     win.setPadreId( rec ? rec.get('id') : 'root' );
                 }
 
@@ -618,21 +619,6 @@ Ext.define('Gsys.controller.Global', {
                     });
                 }
             }
-        }
-
-        if( ope == 'filter') {
-            var frm = tool.getForma();
-            this.fireEvent('crudFilter' + frm );
-        }
-
-        if( ope == 'search') {
-            var frm = tool.getForma();
-            this.fireEvent('crudSearch' + frm );
-        }
-
-        if( ope == 'copy') {
-            var frm = tool.getForma();
-            this.fireEvent('crudCopy' + frm );
         }
 
     },

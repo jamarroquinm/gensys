@@ -6,7 +6,8 @@ Ext.define('Gsys.desktop.main.Desk', {
         'Ext.panel.Panel',
         'Ext.tab.Tab',
         'Ext.button.Split',
-        'Ext.menu.Menu'
+        'Ext.menu.Menu',
+        'Gsys.data.model.Dictionary'
     ],
 
     viewModel: {
@@ -22,7 +23,7 @@ Ext.define('Gsys.desktop.main.Desk', {
         var cont = this.down('#mainmenuopciones'),
             sdesk = this.down('#subdesk'),
             me = this,
-            btn, subd, smod, tbar, work, area, areaId, tab;
+            btn, subd, smod, tbar, work, area, areaId, tab, store;
 
         if( opcs ) {
             Ext.Array.forEach(opcs, function(opc, idx){
@@ -115,14 +116,24 @@ Ext.define('Gsys.desktop.main.Desk', {
                                     tab.add({xtype: ssubop.xtype});
                                 }
                                 else if( ssubop.type == 'd') {
-                                    var dic = Ext.create('Gsys.desktop.main.DeskDictionary', {
-                                        tableId: ssubop.id,
+
+                                    store = Session.getDictionayStore(ssubop.id);
+                                    Ext.regStore(store.storeId, store);
+
+                                    tab.add({
+                                        xtype: 'dictionary',
                                         formTitle: ssubop.formTitle,
-                                        gridTitle: ssubop.gridTitle
+                                        gridTitle: ssubop.gridTitle,
+                                        storeId: store.storeId,
+                                        validationUrl: store.proxy.api.validation
                                     });
 
-                                    tab.add(dic);
+                                    tab.storeId = store.storeId;
 
+                                    tab.on('activate', function(tab){
+                                        const store = Ext.getStore(tab.storeId);
+                                        if( store.count() == 0) store.load();
+                                    });
                                 }
                                 else if( ssubop.type == 'c') {
                                 }

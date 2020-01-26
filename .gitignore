@@ -2,3 +2,5 @@
 /ext
 workspace.json
 .sencha
+
+designer/bootstrap.*

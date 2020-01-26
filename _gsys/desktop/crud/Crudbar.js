@@ -14,62 +14,27 @@ Ext.define('Gsys.desktop.crud.Crudbar', {
         align: 'middle'
     },
 
-    viewModel: {
-        showAddButton: true,
-        showEditButton: true,
-        showDeleteButton: true,
-        showDuplicateButton: false,
-        showSearchButton: false,
-        showFilterButton: false
+    border: 1,
+    padding: 5,
+
+    style: {
+        borderColor: '#DCDCDC',
+        borderStyle: 'solid'
     },
 
-    config: {
-
-        form: null,
-        formTitle: null,
-        type: null,
-
-        validationUrl: null,
-        tableId: null,
-
-        addButton: true,
-        editButton: true,
-        deleteButton: true,
-        duplicateButton: false,
-        searchButton: false,        
-        filterButton: false
+    layout: {
+        type: 'hbox',
+        align: 'middle'
     },
 
+    // config: {
+    //     form: null,
+    //     formTitle: null,
 
-    updateAddButton: function(val) {
-        var mod = this.getViewModel();
-        mod.set('showAddButton', (val ? true : false ));
-    },
-
-    updateEditButton: function(val) {
-        var mod = this.getViewModel();
-        mod.set('showEditButton', (val ? true : false ));
-    },
-
-    updateDeleteButton: function(val) {
-        var mod = this.getViewModel();
-        mod.set('showDeleteButton', (val ? true : false ));
-    },
-
-    updateDuplicateButton: function(val) {
-        var mod = this.getViewModel();
-        mod.set('showDuplicateButton', (val ? true : false ));
-    },
-
-    updateSearchButton: function( val ){
-        var mod = this.getViewModel();
-        mod.set('showSearchButton', (val ? true : false ));
-    },
-
-    updateFilterButton: function( val ){
-        var mod = this.getViewModel();
-        mod.set('showFilterButton', (val ? true : false ));
-    },
+    //     validationUrl: null,
+    //     storeId: null,
+    // },
+  
 
     defaults: {
         scale: 'small',
@@ -82,57 +47,20 @@ Ext.define('Gsys.desktop.crud.Crudbar', {
             xtype: 'button',
             iconCls: 'x-far fa-plus-square',
             text: 'Add',
-            ope: 'add',
-            bind: {
-                hidden: '{!showAddButton}'
-            }
+            ope: 'add'
         },
         {
             xtype: 'button',
             itemId: 'editar',
             iconCls: 'x-far fa-edit',
             text: 'Edit',
-            ope: 'edit',
-            bind: {
-                hidden: '{!showEditButton}'
-            }
-        },
-        {
-            xtype: 'button',
-            itemId: 'copy',
-            iconCls: 'x-far fa-copy',
-            text: 'Copy',
-            ope: 'copy',
-            bind: {
-                hidden: '{!showDuplicateButton}'
-            }
+            ope: 'edit'
         },
         {
             xtype: 'button',
             iconCls: 'x-far fa-minus-square',
             text: 'Delete',
-            ope: 'del',
-            bind: {
-                hidden: '{!showDeleteButton}'
-            }
-        },
-        {
-            xtype: 'button',
-            iconCls: 'x-fas fa-search',
-            text: 'Search',
-            ope: 'search',
-            bind: {
-                hidden: '{!showSearchButton}'
-            }
-        },
-        {
-            xtype: 'button',
-            iconCls: 'x-fas fa-filter',
-            text: 'Filter',
-            ope: 'filter',
-            bind: {
-                hidden: '{!showFilterButton}'
-            }
+            ope: 'del'
         }
     ]    
 

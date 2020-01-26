@@ -8,7 +8,7 @@ Ext.define('Gsys.data.model.Dictionary',{
 
 	fields: [
 		{name: 'id', type: 'int'},
-		{name: 'code', type: 'string'},
+		{name: 'key', type: 'string'},
 		{name: 'name', type: 'string'},
 		{name: 'description', type: 'string'},
 		{name: 'active', type: 'int', defaultValue: 1}
